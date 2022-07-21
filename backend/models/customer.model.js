@@ -33,6 +33,12 @@ const Customer = new Schema({
       ref: "Product",
     },
   ],
+  wishlist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Customer", Customer);

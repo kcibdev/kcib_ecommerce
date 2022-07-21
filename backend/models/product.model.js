@@ -50,7 +50,7 @@ const Product = new Schema(
     sellerId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "Seller",
+      ref: "Merchant",
     },
   },
   {

@@ -10,10 +10,12 @@ const PasswordReset = new Schema({
     type: String,
     required: true,
   },
-  expiration: {
+  createdAt: {
     type: Date,
     required: true,
+    default: Date.now,
+    expires: "3h",
   },
 });
 
-module.export = mongoose.model("PasswordReset", PasswordReset);
+module.exports = mongoose.model("PasswordReset", PasswordReset);
