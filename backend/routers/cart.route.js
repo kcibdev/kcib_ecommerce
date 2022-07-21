@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { authorizedUser } = require("../middlewares/verifyToken");
 
 const {
   getCartsController,
@@ -7,9 +8,9 @@ const {
   deleteCartController,
 } = require("../controllers/cart.controller");
 
-router.get("/", getCartsController);
-router.post("/", addCartController);
-router.put("/:id", updateCartController);
-router.delete("/:id", deleteCartController);
+router.get("/", authorizedUser, getCartsController);
+router.post("/", authorizedUser, addCartController);
+router.put("/:id", authorizedUser, updateCartController);
+router.delete("/:id", authorizedUser, deleteCartController);
 
 module.exports = router;

@@ -31,13 +31,13 @@ const Customer = new Schema(
     cart: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Product",
+        ref: "Cart",
       },
     ],
     wishlist: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Product",
+        ref: "Wishlist",
       },
     ],
   },

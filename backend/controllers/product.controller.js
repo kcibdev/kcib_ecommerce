@@ -66,6 +66,9 @@ const deleteProductController = asyncHandler(async (req, res, next) => {
   }
 });
 const searchProductController = asyncHandler(async (req, res, next) => {});
+const getBestProductController = asyncHandler(async (req, res, next) => {});
+const getTopProductController = asyncHandler(async (req, res, next) => {});
+const getSimilerProductController = asyncHandler(async (req, res, next) => {});
 
 module.exports = {
   getProductsController,
@@ -74,4 +77,7 @@ module.exports = {
   updateProductController,
   deleteProductController,
   searchProductController,
+  getBestProductController,
+  getTopProductController,
+  getSimilerProductController,
 };

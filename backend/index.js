@@ -10,7 +10,7 @@ const customerRoute = require("./routers/customer.route");
 const orderRoute = require("./routers/order.route");
 
 const connectToDatabase = require("./config/database.config");
-const { errorHandler } = require("./middleware/errorHandler");
+const { errorHandler } = require("./middlewares/errorHandler");
 
 const app = express();
 const PORT = process.env.PORT || 5000;

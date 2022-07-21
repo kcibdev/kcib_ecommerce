@@ -133,7 +133,7 @@ const requestPasswordController = asyncHandler(async (req, res) => {
       if (saveToken) {
         const requestTokenUrl = `${process.env.CLIENT_URI}/reset/?token=${newToken}&from=${email}`;
         res.status(200).json({
-          message: "Password Reset Link Sent",
+          message: "Password Reset Link Sent, Expires in 3 hours",
           success: true,
           data: {
             requestTokenUrl,
