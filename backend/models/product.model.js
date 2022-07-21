@@ -1,4 +1,5 @@
-const mongoose= require("mongoose");const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const Product = new Schema(
   {
@@ -22,12 +23,8 @@ const Product = new Schema(
       type: Number,
       required: true,
     },
-    sizes: [
-      type: String,
-    ],
-    colors: [
-      type: String
-    ],
+    sizes: Array,
+    colors: Array,
     rating: {
       type: Number,
       required: true,

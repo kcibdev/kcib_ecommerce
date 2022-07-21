@@ -88,7 +88,7 @@ const registerController = asyncHandler(async (req, res) => {
           address: newUser.address,
           cart: newUser.cart,
           orders: newUser.orders,
-          token: generateJWTToken(user._id),
+          token: generateJWTToken(newUser._id),
         },
       });
     } else {
