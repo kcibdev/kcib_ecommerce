@@ -1,7 +1,15 @@
 const router = require("express").Router();
 
-router.get("/", (req, res) => {});
-router.post("/", (req, res) => {});
-router.delete("/:id", (req, res) => {});
+const {
+  getCartsController,
+  addCartController,
+  updateCartController,
+  deleteCartController,
+} = require("../controllers/cart.controller");
+
+router.get("/", getCartsController);
+router.post("/", addCartController);
+router.put("/:id", updateCartController);
+router.delete("/:id", deleteCartController);
 
 module.exports = router;
