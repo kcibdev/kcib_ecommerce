@@ -7,7 +7,11 @@ const getCartsController = asyncHandler(async (req, res) => {
 
   try {
     const carts = await Cart.find({ customerId: userId });
-    res.status(200).json(carts);
+    res.status(200).json({
+      success: true,
+      message: "Cart successfully fetched",
+      data: carts,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -26,7 +30,7 @@ const addCartController = asyncHandler(async (req, res) => {
       quantity,
       price,
       image,
-      titlee,
+      title,
     }).catch((error) => {
       console.log("Cart Creation: ", error);
     });

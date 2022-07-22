@@ -152,6 +152,22 @@ const requestPasswordController = asyncHandler(async (req, res) => {
   }
 });
 
+const logoutController = asyncHandler(async (req, res) => {
+  try {
+    req.user = null;
+    res.status(200).json({
+      message: "Logout Successful",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: error.message,
+      success: false,
+    });
+  }
+});
+
 const resetPasswordController = asyncHandler(async (req, res) => {
   const { email, token, password } = req.body;
   try {
@@ -227,4 +243,5 @@ module.exports = {
   registerController,
   requestPasswordController,
   resetPasswordController,
+  logoutController,
 };

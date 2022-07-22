@@ -10,11 +10,22 @@ const Customer = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
+      lowercase: true,
+      validate: {
+        validator: function (value) {
+          return /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+            value
+          );
+        },
+      },
     },
     phone: String,
     password: {
       type: String,
       required: true,
+      minLength: 7,
+      trim: true,
     },
     address: [
       {

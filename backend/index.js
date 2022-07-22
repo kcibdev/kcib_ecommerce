@@ -8,6 +8,7 @@ const checkoutRoute = require("./routers/checkout.route");
 const productRoute = require("./routers/product.route");
 const customerRoute = require("./routers/customer.route");
 const orderRoute = require("./routers/order.route");
+const wishlistRoute = require("./routers/wishlist.route");
 
 const connectToDatabase = require("./config/database.config");
 const { errorHandler } = require("./middlewares/errorHandler");
@@ -32,6 +33,7 @@ app.use("/api/v1/cart", cartRoute);
 app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/checkout", checkoutRoute);
+app.use("/api/v1/wishlist", wishlistRoute);
 
 app.use(errorHandler);
 

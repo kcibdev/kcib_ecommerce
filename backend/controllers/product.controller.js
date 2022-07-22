@@ -41,7 +41,26 @@ const getProductController = asyncHandler(async (req, res, next) => {
     console.log(error);
   }
 });
-const createProductController = asyncHandler(async (req, res, next) => {});
+const createProductController = asyncHandler(async (req, res, next) => {
+  try {
+    const saveProduct = Product(req.body);
+    const product = await saveProduct.save();
+
+    if (!product) {
+      return res.status(400).json({
+        success: false,
+        message: "Failed to create product",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: product,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 const updateProductController = asyncHandler(async (req, res, next) => {});
 const deleteProductController = asyncHandler(async (req, res, next) => {
   const { id: productId } = req.params;
