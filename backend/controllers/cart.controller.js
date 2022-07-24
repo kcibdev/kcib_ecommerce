@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { ObjectId } = require("mongoose").Types;
 
 const Cart = require("../models/cart.model");
 
@@ -36,9 +37,7 @@ const addCartController = asyncHandler(async (req, res) => {
 
     if (cart) {
       //check if product already exists in cart
-      const item = cart.items.find(
-        (product) => product.productId === productId
-      );
+      const item = cart.items.find((product) => product.productId == productId);
 
       if (item) {
         res.status(200).json({
@@ -114,23 +113,19 @@ const updateCartController = asyncHandler(async (req, res) => {
     });
 
     if (cart) {
-      const item = cart.items.find((product) => product.productId === cartId);
+      const item = cart.items.find((product) => product.productId == cartId);
       if (item) {
+        cart.total -= item.price * item.quantity;
         item.quantity = quantity;
         const calculatedPrice = item.price * quantity;
         cart.total += calculatedPrice;
         const cartSaved = await cart.save();
         if (cartSaved) {
-          res
-            .status(200)
-            .json({
-              success: true,
-              message: "Cart successfully updated",
-              data: cart,
-            })
-            .catch((error) => {
-              console.log("Cart Update: ", error);
-            });
+          res.status(200).json({
+            success: true,
+            message: "Cart successfully updated",
+            data: cart,
+          });
         } else {
           res.status(400).json({
             success: false,
@@ -150,7 +145,7 @@ const updateCartController = asyncHandler(async (req, res) => {
 });
 
 const deleteCartController = asyncHandler(async (req, res) => {
-  const { id: cartId } = req.params;
+  const { id: productId } = req.params;
   const { _id: userId } = req.user;
 
   try {
@@ -159,11 +154,12 @@ const deleteCartController = asyncHandler(async (req, res) => {
     });
 
     if (cart) {
-      const item = cart.items.find((product) => product.productId === cartId);
+      const item = cart.items.find((product) => product.productId == productId);
+
       if (item) {
         const index = cart.items.indexOf(item);
         cart.items.splice(index, 1);
-        cart.total -= item.price;
+        cart.total -= item.price * item.quantity;
         const cartSaved = await cart.save();
         if (cartSaved) {
           res.status(200).json({
@@ -177,6 +173,12 @@ const deleteCartController = asyncHandler(async (req, res) => {
             message: "Failed to delete cart",
           });
         }
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "Failed to delete cart",
+        });
+        throw new Error("Item not found");
       }
     }
   } catch (error) {
