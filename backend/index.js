@@ -9,6 +9,7 @@ const productRoute = require("./routers/product.route");
 const customerRoute = require("./routers/customer.route");
 const orderRoute = require("./routers/order.route");
 const wishlistRoute = require("./routers/wishlist.route");
+const imageRoute = require("./routers/image.route");
 
 const connectToDatabase = require("./config/database.config");
 const { errorHandler } = require("./middlewares/errorHandler");
@@ -20,6 +21,7 @@ connectToDatabase();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/public/images", express.static(__dirname + "/public/images"));
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -34,6 +36,7 @@ app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/checkout", checkoutRoute);
 app.use("/api/v1/wishlist", wishlistRoute);
+app.use("/api/v1/image", imageRoute);
 
 app.use(errorHandler);
 

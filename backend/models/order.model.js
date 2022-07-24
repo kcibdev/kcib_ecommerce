@@ -12,7 +12,7 @@ const Order = new Schema(
       type: String,
       required: true,
     },
-    amount: {
+    totalAmount: {
       type: Number,
       required: true,
     },

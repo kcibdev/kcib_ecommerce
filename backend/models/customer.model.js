@@ -39,18 +39,18 @@ const Customer = new Schema(
         ref: "Order",
       },
     ],
-    cart: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Cart",
-      },
-    ],
-    wishlist: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Wishlist",
-      },
-    ],
+    // cart: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Cart",
+    //   },
+    // ],
+    // wishlist: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Wishlist",
+    //   },
+    // ],
   },
   {
     timestamps: true,
