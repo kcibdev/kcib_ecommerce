@@ -8,26 +8,35 @@ const Wishlist = new Schema(
       ref: "Customer",
       required: true,
     },
-    productId: {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-    price: {
-      type: Number,
-      default: 0,
-      required: true,
-    },
-    image: {
-      type: String,
-      default: "",
-      required: true,
-    },
-    title: {
-      type: String,
-      default: "",
-      required: true,
-    },
+    items: [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        price: {
+          type: Number,
+          default: 0,
+          required: true,
+        },
+        image: {
+          type: String,
+          default: "",
+          required: true,
+        },
+        title: {
+          type: String,
+          default: "",
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

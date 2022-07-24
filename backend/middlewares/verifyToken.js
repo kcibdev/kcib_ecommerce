@@ -6,10 +6,17 @@ const authorizedUser = asyncHandler(async (req, res, next) => {
   let token;
   const headerAuth = req.headers.authorization;
   if (headerAuth && headerAuth.startsWith("Bearer")) {
+    
     token = headerAuth.split(" ")[1];
     const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = Customer.findById(decodeToken).select("-password");
-    next();
+    
+    if(req.user && req.user._id === decodeToken) {
+      next();
+    } else {
+      req.user = await Customer.findById(decodeToken.id).select("-password");
+      next();
+    }
+
   } else {
     res.status(401);
     throw new Error("Not authorized");

@@ -7,6 +7,11 @@ const Merchant = new Schema({
     required: true,
     ref: "Customer",
   },
+  merchantName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -62,12 +67,6 @@ const Merchant = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Order",
-    },
-  ],
-  cart: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Cart",
     },
   ],
   reviews: [

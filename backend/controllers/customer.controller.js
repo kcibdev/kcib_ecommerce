@@ -44,7 +44,27 @@ const getCustomerController = asyncHandler(async (req, res, next) => {
     console.log(error);
   }
 });
-const updateCustomerController = asyncHandler(async (req, res, next) => {});
+const updateCustomerController = asyncHandler(async (req, res, next) => {
+  const { id: userId } = req.params;
+  try {
+    const customer = await Customer.findById(userId);
+
+    if (customer) {
+      const updatedCustomer = await Customer.findByIdAndUpdate(
+        userId,
+        req.body,
+        { new: true }
+      );
+      return res.status(200).json({
+        success: true,
+        message: "Successfully updated user",
+        data: updatedCustomer,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 const deleteCustomerController = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.params;
   try {
