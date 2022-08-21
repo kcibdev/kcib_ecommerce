@@ -1,3 +1,51 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary-color: #295bb7;
+  --light-primary-color: #5c8be1;
+  --background-color: #96a9cc;
+  --secondary-color: #f8b944;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+.primary-bg {
+  background-color: var(--primary-color);
+}
+.primary-color {
+  color: var(--primary-color);
+}
+.light-primary-bg {
+  background-color: var(--light-primary-color);
+}
+.light-primary-color {
+  color: var(--light-primary-color);
+}
+
+.background-bg {
+  background-color: var(--background-color);
+}
+.background-color {
+  color: var(--background-color);
+}
+
+.secondary-bg {
+  background-color: var(--secondary-color);
+}
+.secondary-color {
+  color: var(--secondary-color);
+}
