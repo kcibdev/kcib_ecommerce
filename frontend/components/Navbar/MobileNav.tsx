@@ -1,24 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { RiShoppingCartLine } from "react-icons/ri";
 import Link from "next/link";
 
 import { categories } from "../../assets/data/categories";
+import ReactCountryFlag from "react-country-flag";
+import axios from "axios";
 
 type Props = {};
 
 const MobileNav = (props: Props) => {
+  const [userCountry, setUserCountry] = useState("NG");
+
+  // useEffect(() => {
+  //   const getUserCountry = async () => {
+  //     const response = await axios.get("https://ipapi.co/json/");
+  //     setUserCountry(response?.data?.country);
+  //   };
+  //   getUserCountry();
+  // }, []);
+
   return (
-    <div className="sticky">
-      <div className="nav__top flex items-center justify-between px-3 h-14 border-b-gray-600 border border-b-[0.5px]">
+    <nav className="sticky shadow md:hidden">
+      <div className="nav__top flex items-center justify-between px-3 h-14 border-b-gray-400 border border-b-[0.2px]">
         <div className="nav__top--logo">
-          <h3 className="font-bold text-2xl">
-            KCIB<span className="secondary-color">ECOM</span>
-          </h3>
+          <Link href="/">
+            <h3 className="font-bold text-2xl primary-color">
+              KCIB<span className="secondary-color">ECOM</span>
+            </h3>
+          </Link>
         </div>
         <div className="nav__top--menu flex-1 ">
           <ul className="nav__menu--icons flex justify-end">
+            <li className="nav__menu--icon flag__icon">
+              <ReactCountryFlag
+                countryCode={userCountry}
+                svg
+                style={{
+                  width: "1.5rem",
+                  height: "1.5rem",
+                  marginRight: "1rem",
+                }}
+                title="US"
+              />
+            </li>
             <li className="nav__menu--icon search__icon">
               <BsSearch className="text-xl mr-4" />
             </li>
@@ -27,29 +53,34 @@ const MobileNav = (props: Props) => {
                 <FaUserAlt className="text-xl mr-4" />
               </Link>
             </li>
-            <li className="nav__menu--icon cart__icon">
-              <Link href="/search/jeans">
-                <AiOutlineShoppingCart className="text-xl mr-4" />
-              </Link>
-            </li>
+            <Link href="/search/jeans">
+              <li className="nav__menu--icon cart__icon relative">
+                <span className="cart__counter absolute primary-bg rounded-full w-2 h-2 flex items-center justify-center p-[10px] text-white -top-2 -right-0">
+                  0
+                </span>
+                <RiShoppingCartLine className="text-xl mr-4" />
+              </li>
+            </Link>
           </ul>
         </div>
       </div>
       <div className="nav__bottom">
         <div className="nav__bottom--menu">
-          <ul className="nav__botttom--categories flex snap-x  w-full overflow-x-auto">
+          <ul className="nav__botttom--categories flex snap-x overflow-x-auto">
             {categories.map((category, index) => (
-              <li
-                className="nav__bottom--category snap-center px-4 py-2 font-medium"
-                key={index}
-              >
-                {category}
-              </li>
+              <Link href={`/category/${category}`} key={index}>
+                <li
+                  className="nav__bottom--category snap-center px-4 py-3 font-medium whitespace-nowrap"
+                  key={index}
+                >
+                  {category}
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

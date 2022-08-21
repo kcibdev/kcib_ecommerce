@@ -49,3 +49,7 @@ body {
 .secondary-color {
   color: var(--secondary-color);
 }
+
+.nav__botttom--categories::-webkit-scrollbar {
+  display: none;
+}
