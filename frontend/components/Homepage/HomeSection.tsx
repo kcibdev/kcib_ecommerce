@@ -25,7 +25,7 @@ const HomeSection = (props: Props) => {
   });
 
   return (
-    <section className="home__container background-bg">
+    <section className="home__container background-bg mt-[6.5rem] md:mt-16">
       <div className="home__categories hidden md:block bg-white rounded-sm mx-2">
         <ul className="home__categories--lists pr-4 py-3 px-3">
           {categories.map(

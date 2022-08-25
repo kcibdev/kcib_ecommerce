@@ -14,7 +14,7 @@ const DesktopNav = (props: Props) => {
   return (
     <>
       <nav
-        className="hidden md:flex justify-between items-center h-16 w-full shadow-md sticky px-7"
+        className="hidden md:flex justify-between items-center h-16 w-full shadow-md fixed z-50 top-0 left-0 px-7 bg-white"
         id="nav_id"
       >
         <div className="nav__menu--logo">

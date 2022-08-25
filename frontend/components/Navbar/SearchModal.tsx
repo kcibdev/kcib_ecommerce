@@ -43,6 +43,7 @@ const SearchModal = (props: Props) => {
             <input
               type="text"
               placeholder="Search"
+              autoFocus
               value={searchValue}
               className="w-[90%] p-3 border-none outline-none font-medium text-sm"
               onChange={onChangeValue}
