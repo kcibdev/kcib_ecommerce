@@ -43,7 +43,9 @@ const ProductCard = (props: Props) => {
         <div className="product__data p-2">
           <div className="product__data--top flex justify-between items-center mb-2">
             <Link href="/product/[id]" as={`/product/${id}`}>
-              <h3 className="product__title text-sm font-normal">{title}</h3>
+              <h3 className="product__title text-sm font-normal substring">
+                {title}
+              </h3>
             </Link>
             <div className="product__saved mx-2">
               {isSaved && <MdFavorite className="text-xl secondary-color" />}

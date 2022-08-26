@@ -137,6 +137,16 @@ const Product = (props: Props) => {
                   )}
                 </span>
               </div>
+              <div className="product__details--seller mb-2 md:mb-1">
+                <p className="text-base font-semibold">
+                  Seller:{" "}
+                  <Link href="">
+                    <span className="primary-color font-medium hover:underline cursor-pointer">
+                      Bright Store
+                    </span>
+                  </Link>
+                </p>
+              </div>
               <div className="product__details--brand mb-2 md:mb-1">
                 <p className="text-base font-semibold">
                   Brand:{" "}
@@ -147,6 +157,7 @@ const Product = (props: Props) => {
                   </Link>
                 </p>
               </div>
+
               <div className="product__details--rating flex items-center mb-2 cursor-pointer">
                 <div className="product__rating--stars flex items-center mr-2">
                   <MdStar className="text-xl secondary-color" />
@@ -245,7 +256,7 @@ const Product = (props: Props) => {
                 <button className="product__btn--cart shadow-md hover:scale-95 transition ease-in-out delay-150 duration-200 px-5 py-3 md:py-2 bg-[#f8b944] rounded flex items-center">
                   <BsBagCheckFill className="mr-2 md:mr-4 text-lg md:text-xl text-white" />
                   <span className="text-sm md:text-base font-semibold text-white">
-                    Checkout
+                    Buy Now
                   </span>
                 </button>
               </div>

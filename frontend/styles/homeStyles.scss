@@ -23,12 +23,6 @@
 .popular__products::-webkit-scrollbar {
   display: none;
 }
-.product__title {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
 
 @media screen and (max-width: 768px) {
   .home__banner--image {

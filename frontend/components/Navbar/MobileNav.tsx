@@ -61,7 +61,7 @@ const MobileNav = (props: Props) => {
                   <FaUserAlt className="text-[1.125rem] mr-4 text-gray-700" />
                 </Link>
               </li>
-              <Link href="/search/jeans">
+              <Link href="/cart">
                 <li className="nav__menu--icon cart__icon relative">
                   <span className="cart__counter absolute primary-bg rounded-full w-2 h-2 flex items-center justify-center p-[10px] text-white -top-2 -right-0">
                     0
