@@ -15,12 +15,12 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "Nunito", sans-serif;
 }
 
 body {
   font-size: 16px;
   overflow-x: hidden;
-  font-family: "Nunito", sans-serif;
   background-color: #f0f0f0;
 }
 
@@ -53,4 +53,7 @@ body {
 
 .nav__botttom--categories::-webkit-scrollbar {
   display: none;
+}
+.ReactModal__Overlay--after-open {
+  z-index: 999;
 }

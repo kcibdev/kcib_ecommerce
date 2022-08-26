@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { banners } from "../../assets/data/banner";
 import { categories } from "../../assets/data/categories";
@@ -25,18 +26,20 @@ const HomeSection = (props: Props) => {
   });
 
   return (
-    <section className="home__container background-bg mt-[6.5rem] md:mt-16">
+    <section className="home__container background-bg md:mt-16">
       <div className="home__categories hidden md:block bg-white rounded-sm mx-2">
         <ul className="home__categories--lists pr-4 py-3 px-3">
           {categories.map(
             (category, index) =>
               category !== "All" && (
-                <li
-                  className="home__categories--list px-4 py-[0.35rem] hover:underline cursor-pointer font-medium text-base"
-                  key={index}
-                >
-                  {category}
-                </li>
+                <Link href={`/category/${category}`}>
+                  <li
+                    className="home__categories--list px-4 py-[0.35rem] hover:underline cursor-pointer font-medium text-base"
+                    key={index}
+                  >
+                    {category}
+                  </li>
+                </Link>
               )
           )}
         </ul>

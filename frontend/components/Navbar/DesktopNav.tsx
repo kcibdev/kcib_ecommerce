@@ -14,12 +14,12 @@ const DesktopNav = (props: Props) => {
   return (
     <>
       <nav
-        className="hidden md:flex justify-between items-center h-16 w-full shadow-md fixed z-50 top-0 left-0 px-7 bg-white"
+        className="hidden md:flex justify-between items-center h-16 w-full shadow-md fixed z-40 top-0 left-0 px-7 bg-white"
         id="nav_id"
       >
         <div className="nav__menu--logo">
           <Link href="/">
-            <h3 className="font-bold text-3xl primary-color">
+            <h3 className="font-bold text-3xl primary-color cursor-pointer">
               KCIB<span className="secondary-color">ECOM</span>
             </h3>
           </Link>
@@ -54,12 +54,12 @@ const DesktopNav = (props: Props) => {
               />
             </li>
             <li className="nav__action account__icon">
-              <Link href="/details">
-                <FaUserAlt className="text-xl mr-5" />
+              <Link href="/auth/login">
+                <FaUserAlt className="text-xl mr-5 cursor-pointer" />
               </Link>
             </li>
             <Link href="/cart">
-              <li className="nav__action cart__icon relative">
+              <li className="nav__action cart__icon relative cursor-pointer">
                 <span className="cart__counter absolute primary-bg rounded-full w-2 h-2 flex items-center justify-center p-[10px] text-white -top-2 -right-0">
                   0
                 </span>

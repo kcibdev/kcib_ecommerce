@@ -25,7 +25,7 @@ const MobileNav = (props: Props) => {
 
   return (
     <>
-      <nav className="fixed shadow-lg md:hidden bg-white top-0 left-0 z-50">
+      <nav className="sticky shadow-lg md:hidden bg-white top-0 left-0 z-40">
         <div className="nav__top flex items-center justify-between px-3 h-14 border-b-gray-400 border border-b-[0.2px]">
           <div className="nav__top--logo">
             <Link href="/">
