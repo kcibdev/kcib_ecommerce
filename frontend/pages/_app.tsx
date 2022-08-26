@@ -1,5 +1,6 @@
 import "../styles/globals.scss";
 import "../styles/homeStyles.scss";
+import "../styles/auth.scss";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";

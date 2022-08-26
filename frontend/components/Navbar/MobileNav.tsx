@@ -57,7 +57,7 @@ const MobileNav = (props: Props) => {
                 <BsSearch className="text-[1.125rem] mr-4 text-gray-700" />
               </li>
               <li className="nav__menu--icon account__icon">
-                <Link href="/details">
+                <Link href="/auth/login">
                   <FaUserAlt className="text-[1.125rem] mr-4 text-gray-700" />
                 </Link>
               </li>

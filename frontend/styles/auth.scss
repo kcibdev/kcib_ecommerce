@@ -1,0 +1,35 @@
+.login__form-group .underline,
+.register__form-group .underline {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.login__form-group .underline::before,
+.register__form-group .underline::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.login__input:focus ~ label,
+.login__input:valid ~ label,
+.register__input:focus ~ label,
+.register__input:valid ~ label {
+  color: #415;
+  transform: translateY(-20px);
+  font-size: 13px;
+}
+
+.login__input:focus ~ .underline::before,
+.register__input:focus ~ .underline::before {
+  transform: translateX(0%);
+}
