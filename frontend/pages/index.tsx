@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+
 import {
-  DesktopNav,
-  MobileNav,
   HomeSection,
   PopularSection,
   FeaturedSection,
   NewestSection,
-  Footer,
 } from "../components";
 
 const Home: NextPage = () => {

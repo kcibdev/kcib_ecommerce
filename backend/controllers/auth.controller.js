@@ -39,6 +39,10 @@ const loginController = asyncHandler(async (req, res) => {
         throw new Error("Invalid Password");
       }
     } else {
+      // res.status(400).json({
+      //   message: "Invalid Email Address",
+      //   success: false,
+      // });
       throw new Error("Invalid Email Address");
     }
   } catch (error) {

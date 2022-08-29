@@ -1,16 +1,85 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { FaFacebookSquare } from "react-icons/fa";
 import { BsGoogle } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import Head from "next/head";
+import { toast } from "react-toastify";
+import PulseLoader from "react-spinners/PulseLoader";
+import { NEXT_LOGIN_URL } from "../../constants";
+import { fetchFunc } from "../../utils/fetchFunc";
+import { User } from "../../types/userTypes";
+import useAuthStore from "../../store/useAuthStore";
 
 type Props = {};
 
 const LoginPage = (props: Props) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const { setUserAccount, isAuthenticated } = useAuthStore((state) => state);
+  const router = useRouter();
   const btnStyles =
     "login__btn w-full rounded flex items-center justify-center py-[0.6rem] shadow-md relative font-semibold text-white hover:scale-95 transition ease-in-out delay-150 duration-200";
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const onSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+
+    const { email, password } = formData;
+    if (!email || !password) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    setIsLoading(true);
+    console.log(email, password);
+    const result = await fetchFunc(
+      NEXT_LOGIN_URL!,
+      {
+        email,
+        password,
+      },
+      "POST"
+    );
+    if (!result.success) {
+      toast.error(result.message);
+    } else {
+      toast.success(result.message);
+      const userData = result.data;
+      console.log(userData);
+      const user: User = {
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        address: userData.address,
+        phone: userData.phone,
+        cart: userData.cart,
+        wishlist: userData.wishlist,
+        token: userData.token,
+      };
+      setUserAccount(user);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated]);
+
   return (
     <>
       <Head>
@@ -40,6 +109,9 @@ const LoginPage = (props: Props) => {
                   className="login__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
                   id="email"
                   required
+                  name="email"
+                  value={formData.email}
+                  onChange={onInputChange}
                 />
                 <div className="underline"></div>
                 <label
@@ -55,6 +127,9 @@ const LoginPage = (props: Props) => {
                   className="login__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
                   id="password"
                   required
+                  name="password"
+                  value={formData.password}
+                  onChange={onInputChange}
                 />
                 <div className="underline"></div>
                 <label
@@ -77,13 +152,22 @@ const LoginPage = (props: Props) => {
               <p className="login__forgot text-right text-base hover:underline font-semibold primary-color cursor-pointer py-3 mr-1">
                 Forgot Password
               </p>
-              <div className="login__form-group">
-                <button
-                  type="submit"
-                  className={`login__btn--email secondary-bg ${btnStyles}`}
-                >
-                  Login
-                </button>
+              <div className="login__form-group flex justify-center flex-col">
+                {!isLoading && (
+                  <button
+                    type="submit"
+                    className={`login__btn--email secondary-bg ${btnStyles}`}
+                    onClick={onSubmit}
+                  >
+                    Login
+                  </button>
+                )}
+                <PulseLoader
+                  size={15}
+                  className="mx-auto my-3"
+                  color={"#192a56"}
+                  loading={isLoading}
+                />
               </div>
             </form>
             <p className="login__or text-center font-semibold text-lg text-gray-500 my-3">
