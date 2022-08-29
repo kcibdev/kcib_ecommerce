@@ -47,6 +47,11 @@ const Product = new Schema(
       type: String,
       required: true,
     },
+    totalOrders: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     subCategory: String,
     available: {
       type: Boolean,

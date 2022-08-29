@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { BsFillShieldLockFill } from "react-icons/bs";
@@ -7,10 +7,25 @@ import Visa from "../assets/icons/visa.png";
 import MasterCard from "../assets/icons/mastercard.png";
 import CartProduct from "../components/CartProduct";
 import { numberFormat } from "../utils/numberFormatter";
+import Link from "next/link";
+import { cartProducts } from "../assets/data/products";
 
 type Props = {};
 
 const Cart = (props: Props) => {
+  const [subTotal, setSubTotal] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [shippingFee, setShippingFee] = useState(0);
+  const [productPrice, setProductPrice] = useState([]);
+
+  useEffect(() => {
+    cartProducts.forEach((product) => {
+      setSubTotal((prev) => prev + Number(product.price) * 414);
+      console.log("top price");
+      console.log(numberFormat(Number(product.price) * 414));
+    });
+  }, []);
+
   return (
     <div>
       <Head>
@@ -25,9 +40,9 @@ const Cart = (props: Props) => {
             </h3>
           </div>
           <div className="cart__items w-full">
-            <CartProduct />
-            <CartProduct />
-            <CartProduct />
+            <CartProduct product="" />
+            <CartProduct product="" />
+            <CartProduct product="" />
           </div>
         </div>
         <div className="cart__info mx-2 mt-3">
@@ -51,9 +66,11 @@ const Cart = (props: Props) => {
               <p className="">{numberFormat(10000)}</p>
             </div>
             <hr />
-            <div className="cart__summary--btn my-3 w-full rounded py-[0.5rem] shadow-md primary-bg text-center font-semibold text-white hover:scale-95 transition ease-in-out delay-150 duration-200">
-              <button className="btn btn-primary">Checkout (10,000)</button>
-            </div>
+            <Link href="/checkout">
+              <div className="cart__summary--btn my-3 w-full rounded py-[0.5rem] shadow-md primary-bg text-center font-semibold text-white hover:scale-95 transition ease-in-out delay-150 duration-200">
+                <button className="btn btn-primary">Checkout (10,000)</button>
+              </div>
+            </Link>
             <div className="summary__info">
               <div className="summary__secured flex items-center mt-5 mb-4">
                 <BsFillShieldLockFill className="text-lg text-[green] mr-2" />{" "}

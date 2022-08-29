@@ -60,35 +60,10 @@ const SearchModal = (props: Props) => {
           <div className="modalContent py-4 px-4">
             <ul className="modal__search--lists">
               <Link href="/search/labore">
-                <li className="modal__search--item text-sm font-medium text-gray-600 py-2 border-b-[0.2px] border-b-gray-300">
-                  labore non anim Lorem cupidatat qui. Incididunt labore eu
-                  dolore pariatur fugiat. Ad
-                </li>
-              </Link>
-              <Link href="/search/labore">
-                <li className="modal__search--item text-sm font-medium text-gray-600 py-2 border-b-[0.2px] border-b-gray-300">
-                  labore non anim Lorem cupidatat qui.
-                </li>
-              </Link>
-              <Link href="/search/labore">
-                <li className="modal__search--item text-sm font-medium text-gray-600 py-2 border-b-[0.2px] border-b-gray-300">
-                  Lorem cupidatat qui. Incididunt labore eu dolore pariatur
-                  fugiat. Ad
-                </li>
-              </Link>
-              <Link href="/search/labore">
-                <li className="modal__search--item text-sm font-medium text-gray-600 py-2 border-b-[0.2px] border-b-gray-300">
-                  Incididunt la
-                </li>
-              </Link>
-              <Link href="/search/labore">
-                <li className="modal__search--item text-sm font-medium text-gray-600 py-2 border-b-[0.2px] border-b-gray-300">
-                  labore non anim Lorem cupidatat qui. Incididunt labore eu
-                  dolore pariatur fugiat. Ad
-                </li>
-              </Link>
-              <Link href="/search/labore">
-                <li className="modal__search--item text-sm font-medium text-gray-600 py-2 border-b-[0.2px] border-b-gray-300">
+                <li
+                  className="modal__search--item cursor-pointer hover:underline text-sm font-medium text-gray-600 py-2 border-b-[0.2px] border-b-gray-300"
+                  onClick={() => setIsModalOpen(false)}
+                >
                   labore non anim Lorem cupidatat qui. Incididunt labore eu
                   dolore pariatur fugiat. Ad
                 </li>
