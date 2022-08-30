@@ -32,7 +32,7 @@ const HomeSection = (props: Props) => {
           {categories.map(
             (category, index) =>
               category !== "All" && (
-                <Link href={`/category/${category}`}>
+                <Link href={`/category/${category}`} key={index}>
                   <li
                     className="home__categories--list px-4 py-[0.35rem] hover:underline cursor-pointer font-medium text-base"
                     key={index}

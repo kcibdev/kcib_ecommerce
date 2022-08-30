@@ -21,20 +21,20 @@ const ProductCard = (props: Props) => {
     product: { id, image, title, price, discount, rating, isSaved },
   } = props;
   const discountPrice = ((discount * price) / 100).toFixed(0);
-
-  const savedProduct = () => {};
   return (
     <div>
       <div className="product__card rounded-lg bg-white max-w-[200px] overflow-hidden cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200 min-w-[200px] min-h-[310px]">
         <div className="product__image h-[60%] w-full relative">
           <Link href="/product/[id]" as={`/product/${id}`}>
-            <Image
-              src={image}
-              alt="product"
-              width="100%"
-              height="100%"
-              layout="responsive"
-            />
+            <a>
+              <Image
+                src={image}
+                alt="product"
+                width="100%"
+                height="100%"
+                layout="responsive"
+              />
+            </a>
           </Link>
           <div className="product__discount absolute top-2 right-2 text-xs secondary-bg rounded px-1 font-medium text-white">
             {discount > 0 && `-${discount}%`}

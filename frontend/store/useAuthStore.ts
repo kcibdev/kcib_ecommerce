@@ -8,6 +8,9 @@ const authStore = (set: any) => ({
   setUserAccount: async (user: User) => {
     set((state: any) => ({ userAccount: user, isAuthenticated: true }));
   },
+  logoutUser: async () => {
+    set((state: any) => ({ userAccount: {}, isAuthenticated: false }));
+  },
 });
 
 const useAuthStore = create(

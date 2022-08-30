@@ -149,9 +149,11 @@ const LoginPage = (props: Props) => {
                   )}
                 </div>
               </div>
-              <p className="login__forgot text-right text-base hover:underline font-semibold primary-color cursor-pointer py-3 mr-1">
-                Forgot Password
-              </p>
+              <Link href="/auth/forgot">
+                <p className="login__forgot text-right text-base hover:underline font-semibold primary-color cursor-pointer py-3 mr-1">
+                  Forgot Password
+                </p>
+              </Link>
               <div className="login__form-group flex justify-center flex-col">
                 {!isLoading && (
                   <button

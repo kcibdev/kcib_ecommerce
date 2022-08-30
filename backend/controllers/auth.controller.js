@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 
 const Customer = require("../models/customer.model");
 const PasswordReset = require("../models/passwordreset.model");
+const Cart = require("../models/cart.model");
 
 const genRandom = require("../utils/generateRandom");
 const { generateJWTToken } = require("../utils/jwtTokens");
@@ -21,6 +22,10 @@ const loginController = asyncHandler(async (req, res) => {
     if (user) {
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
+        const cart = Cart.findOne({ customerId: user._id });
+        if (cart) {
+          user.cart = cart.items;
+        }
         res.status(200).json({
           message: "Login Successful",
           success: true,

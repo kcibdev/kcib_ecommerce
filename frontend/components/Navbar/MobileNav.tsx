@@ -58,7 +58,9 @@ const MobileNav = (props: Props) => {
               </li>
               <li className="nav__menu--icon account__icon">
                 <Link href="/auth/login">
-                  <FaUserAlt className="text-[1.125rem] mr-4 text-gray-700" />
+                  <a>
+                    <FaUserAlt className="text-[1.125rem] mr-4 text-gray-700" />
+                  </a>
                 </Link>
               </li>
               <Link href="/cart">

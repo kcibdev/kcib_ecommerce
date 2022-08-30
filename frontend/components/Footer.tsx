@@ -44,16 +44,24 @@ const Footer = (props: Props) => {
           </h3>
           <div className="footer__social--icons flex items-center justify-between">
             <Link href="https://www.twitter.com" target="_blank">
-              <IoLogoTwitter className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              <a>
+                <IoLogoTwitter className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              </a>
             </Link>
             <Link href="https://www.facebook.com" target="_blank">
-              <IoLogoFacebook className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              <a>
+                <IoLogoFacebook className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              </a>
             </Link>
             <Link href="https://www.instagram.com" target="_blank">
-              <IoLogoInstagram className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              <a>
+                <IoLogoInstagram className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              </a>
             </Link>
             <Link href="https://www.whatsapp.com" target="_blank">
-              <IoLogoWhatsapp className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              <a>
+                <IoLogoWhatsapp className="footer__social--icon text-3xl cursor-pointer hover:scale-95 transition ease-in-out delay-150 duration-200" />
+              </a>
             </Link>
           </div>
         </div>
