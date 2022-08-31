@@ -7,6 +7,7 @@ import { RiShoppingCartLine } from "react-icons/ri";
 import { IoIosArrowDown } from "react-icons/io";
 import SearchModal from "./SearchModal";
 import useAuthStore from "../../store/useAuthStore";
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -103,12 +104,13 @@ const DesktopNav = (props: Props) => {
                       className="nav__popup--item px-3 py-2 cursor-pointer text-center"
                       onClick={() => {
                         logoutUser();
+                        toast.success("Logout Successful");
                         setIsPopupOpen(false);
                       }}
                     >
-                      <h3 className="font-medium text-sm primary-color">
+                      <p className="font-medium text-sm primary-color">
                         Logout
-                      </h3>
+                      </p>
                     </li>
                   </ul>
                 </div>

@@ -7,10 +7,8 @@ import { BsGoogle } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
 import PulseLoader from "react-spinners/PulseLoader";
-import { NEXT_LOGIN_URL } from "../../constants";
-import { fetchFunc } from "../../utils/fetchFunc";
-import { User } from "../../types/userTypes";
 import useAuthStore from "../../store/useAuthStore";
+import { loginUser } from "../../services/auth";
 
 type Props = {};
 
@@ -44,34 +42,7 @@ const LoginPage = (props: Props) => {
       return;
     }
     setIsLoading(true);
-    console.log(email, password);
-    const result = await fetchFunc(
-      NEXT_LOGIN_URL!,
-      {
-        email,
-        password,
-      },
-      "POST"
-    );
-    if (!result.success) {
-      toast.error(result.message);
-    } else {
-      toast.success(result.message);
-      const userData = result.data;
-      console.log(userData);
-      const user: User = {
-        id: userData.id,
-        name: userData.name,
-        email: userData.email,
-        address: userData.address,
-        phone: userData.phone,
-        cart: userData.cart,
-        wishlist: userData.wishlist,
-        token: userData.token,
-      };
-      setUserAccount(user);
-    }
-    setIsLoading(false);
+    loginUser(event, formData, setIsLoading, setUserAccount);
   };
 
   useEffect(() => {

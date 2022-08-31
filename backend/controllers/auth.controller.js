@@ -37,6 +37,7 @@ const loginController = asyncHandler(async (req, res) => {
             address: user.address,
             cart: user.cart,
             orders: user.orders,
+            wishlist: user.wishlist,
             token: generateJWTToken(user._id),
           },
         });
@@ -78,7 +79,7 @@ const registerController = asyncHandler(async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new Customer({
+    const newUser = await Customer({
       name,
       email,
       phone,
@@ -86,7 +87,7 @@ const registerController = asyncHandler(async (req, res) => {
     }).save();
 
     if (newUser) {
-      res.status(200).json({
+      res.status(201).json({
         message: "Registration Successful",
         success: true,
         data: {
@@ -97,6 +98,7 @@ const registerController = asyncHandler(async (req, res) => {
           address: newUser.address,
           cart: newUser.cart,
           orders: newUser.orders,
+          wishlist: newUser.wishlist,
           token: generateJWTToken(newUser._id),
         },
       });

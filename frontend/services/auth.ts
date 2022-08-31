@@ -1,0 +1,91 @@
+import React from "react";
+import { toast } from "react-toastify";
+import { fetchFunc } from "../utils/fetchFunc";
+import { User } from "../types/userTypes";
+import { NEXT_LOGIN_URL, NEXT_REGISTER_URL } from "../constants";
+
+export const loginUser = async (
+  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  formData: {
+    email: string;
+    password: string;
+  },
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setUserAccount: (user: User) => Promise<void>
+) => {
+  event.preventDefault();
+
+  const result = await fetchFunc(NEXT_LOGIN_URL!, formData, "POST");
+  if (!result.success) {
+    toast.error(result.message);
+  } else {
+    toast.success(result.message);
+    const userData = result.data;
+    console.log(userData);
+    const user: User = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      address: userData.address,
+      phone: userData.phone,
+      cart: userData.cart,
+      wishlist: userData.wishlist,
+      token: userData.token,
+    };
+    setUserAccount(user);
+  }
+  setIsLoading(false);
+};
+
+export const registerUser = async (
+  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  formData: {
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+  },
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setUserAccount: (user: User) => Promise<void>
+) => {
+  event.preventDefault();
+
+  const result = await fetchFunc(NEXT_REGISTER_URL!, formData, "POST");
+
+  if (!result.success) {
+    toast.error(result.message);
+  } else {
+    toast.success(result.message);
+    const userData = result.data;
+    const user: User = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      address: userData.address,
+      phone: userData.phone,
+      cart: userData.cart,
+      wishlist: userData.wishlist,
+      token: userData.token,
+    };
+    setUserAccount(user);
+  }
+  setIsLoading(false);
+};
+
+const forgotPassword = async (
+  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  formData: {
+    email: string;
+  },
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  event.preventDefault();
+
+  const result = await fetchFunc(NEXT_LOGIN_URL!, formData, "POST");
+  if (!result.success) {
+    toast.error(result.message);
+  } else {
+    toast.success(result.message);
+  }
+  setIsLoading(false);
+};
