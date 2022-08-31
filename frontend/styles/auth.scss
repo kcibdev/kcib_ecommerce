@@ -1,7 +1,4 @@
-.login__form-group .underline,
-.register__form-group .underline,
-.forgot__form-group .underline,
-.reset__form-group .underline {
+.form__input .underline {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -10,10 +7,7 @@
   overflow: hidden;
 }
 
-.login__form-group .underline::before,
-.register__form-group .underline::before,
-.forgot__form-group .underline::before,
-.reset__form-group .underline::before {
+.form__input .underline::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -24,20 +18,13 @@
   transition: transform 0.5s ease;
 }
 
-.login__input:focus ~ label,
-.login__input:valid ~ label,
-.register__input:focus ~ label,
-.register__input:valid ~ label,
-.forgot__input:focus ~ label,
-.forgot__input:valid ~ label,
-.reset__input:focus ~ label,
-.reset__input:valid ~ label {
+.form__input input:focus ~ label,
+.form__input input:valid ~ label {
   color: #415;
   transform: translateY(-20px);
   font-size: 13px;
 }
 
-.login__input:focus ~ .underline::before,
-.register__input:focus ~ .underline::before {
+.form__input input:focus ~ .underline::before {
   transform: translateX(0%);
 }

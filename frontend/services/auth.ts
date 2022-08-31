@@ -7,7 +7,8 @@ import {
   NEXT_LOGIN_URL,
   NEXT_REGISTER_URL,
   NEXT_RESET_URL,
-} from "../constants";
+  NEXT_ACCESS_URL,
+} from "../utils/constants";
 
 export const loginUser = async (
   event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -38,6 +39,39 @@ export const loginUser = async (
       token: userData.token,
     };
     setUserAccount(user);
+  }
+  setIsLoading(false);
+};
+
+export const accessLoginUser = async (
+  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  formData: {
+    email: string;
+    password: string;
+  },
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setAdminAccount: (user: User) => Promise<void>
+) => {
+  event.preventDefault();
+
+  const result = await fetchFunc(NEXT_ACCESS_URL!, formData, "POST");
+  if (!result.success) {
+    toast.error(result.message);
+  } else {
+    toast.success(result.message);
+    const userData = result.data;
+    console.log("userData", userData);
+    const user: User = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      address: userData.address,
+      phone: userData.phone,
+      cart: userData.cart,
+      wishlist: userData.wishlist,
+      token: userData.token,
+    };
+    setAdminAccount(user);
   }
   setIsLoading(false);
 };

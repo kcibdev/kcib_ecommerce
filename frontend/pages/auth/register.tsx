@@ -81,7 +81,7 @@ const RegisterPage = (props: Props) => {
           </div>
           <div className="register__content">
             <form action="#" className="register__form my-3" id="login-form">
-              <div className="register__form-group relative w-full h-[45px] my-4">
+              <div className="register__form-group form__input relative w-full h-[45px] my-4">
                 <input
                   type="text"
                   className="register__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
@@ -99,7 +99,7 @@ const RegisterPage = (props: Props) => {
                   Full Name
                 </label>
               </div>
-              <div className="register__form-group relative w-full h-[45px] my-4">
+              <div className="register__form-group form__input relative w-full h-[45px] my-4">
                 <input
                   type="email"
                   className="register__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
@@ -117,7 +117,7 @@ const RegisterPage = (props: Props) => {
                   Email
                 </label>
               </div>
-              <div className="register__form-group relative w-full h-[45px] my-4">
+              <div className="register__form-group form__input relative w-full h-[45px] my-4">
                 <input
                   type="number"
                   className="register__input w-full h-full outline-none border-b-2 border-gray-200 px-1 appearance-none"
@@ -135,7 +135,7 @@ const RegisterPage = (props: Props) => {
                   Phone Number
                 </label>
               </div>
-              <div className="register__form-group relative w-full h-[45px] my-4">
+              <div className="register__form-group form__input relative w-full h-[45px] my-4">
                 <input
                   type={showPassword ? "text" : "password"}
                   className="register__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
@@ -163,7 +163,7 @@ const RegisterPage = (props: Props) => {
                   )}
                 </div>
               </div>
-              <div className="register__form-group flex justify-center flex-col">
+              <div className="register__form-group form__input flex justify-center flex-col">
                 {!isLoading && (
                   <button
                     type="submit"
@@ -184,7 +184,7 @@ const RegisterPage = (props: Props) => {
             <p className="register__or text-center font-semibold text-lg text-gray-500 my-3">
               OR
             </p>
-            <div className="register__form-group mb-3">
+            <div className="register__form-group form__input mb-3">
               <button
                 type="submit"
                 className={`register__btn--google bg-[#db4b39] ${btnStyles}`}
@@ -193,7 +193,7 @@ const RegisterPage = (props: Props) => {
                 Google
               </button>
             </div>
-            <div className="register__form-group mb-3">
+            <div className="register__form-group form__input mb-3">
               <button
                 type="submit"
                 className={`register__btn--facebook bg-[#3b5998] ${btnStyles}`}

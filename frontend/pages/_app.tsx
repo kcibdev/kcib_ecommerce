@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     path === "register" ||
     path === "checkout" ||
     path === "forgot" ||
+    router.pathname.split("/")[1] === "admin" ||
     path === "reset";
   return (
     <>

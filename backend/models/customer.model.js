@@ -51,6 +51,10 @@ const Customer = new Schema(
         ref: "Wishlist",
       },
     ],
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

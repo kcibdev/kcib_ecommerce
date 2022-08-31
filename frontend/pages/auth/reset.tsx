@@ -85,7 +85,7 @@ const ResetPassword = (props: Props) => {
           </div>
           <div className="reset__content">
             <form action="#" className="reset__form my-3" id="login-form">
-              <div className="reset__form-group relative w-full h-[45px] my-4">
+              <div className="reset__form-group form__input relative w-full h-[45px] my-4">
                 <input
                   type="password"
                   className="reset__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
@@ -103,7 +103,7 @@ const ResetPassword = (props: Props) => {
                   Password
                 </label>
               </div>
-              <div className="reset__form-group relative w-full h-[45px] my-4">
+              <div className="reset__form-group form__input relative w-full h-[45px] my-4">
                 <input
                   type="password"
                   className="reset__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
@@ -121,7 +121,7 @@ const ResetPassword = (props: Props) => {
                   Confirm Password
                 </label>
               </div>
-              <div className="reset__form-group flex justify-center flex-col">
+              <div className="reset__form-group form__input flex justify-center flex-col">
                 {!isLoading && (
                   <button
                     type="submit"

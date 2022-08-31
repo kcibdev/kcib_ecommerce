@@ -64,7 +64,7 @@ const ForgotPage = (props: Props) => {
           </div>
           <div className="forgot__content">
             <form action="#" className="forgot__form my-3" id="login-form">
-              <div className="forgot__form-group relative w-full h-[45px] my-4">
+              <div className="forgot__form-group form__input relative w-full h-[45px] my-4">
                 <input
                   type="email"
                   className="forgot__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
@@ -82,7 +82,7 @@ const ForgotPage = (props: Props) => {
                   Email
                 </label>
               </div>
-              <div className="forgot__form-group flex justify-center flex-col">
+              <div className="forgot__form-group form__input flex justify-center flex-col">
                 {!isLoading && (
                   <button
                     type="submit"

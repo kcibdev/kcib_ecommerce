@@ -1,41 +1,42 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Product = new Schema(
+const Brand = new Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
+    },
+    image: {
+      type: Buffer,
+      required: true,
+      contentType: String,
+      default: "",
     },
     description: {
       type: String,
       required: true,
     },
-    price: {
+    totalProducts: {
       type: Number,
       required: true,
-    },
-    discount: {
-      type: Number,
       default: 0,
     },
-    image: [
-      {
-        type: Buffer,
-        required: true,
-        contentType: String,
-      },
-    ],
-    brand: {
-      type: String,
-      required: true,
-    },
-    quantity: {
+    totalOrders: {
       type: Number,
       required: true,
+      default: 0,
     },
-    sizes: Array,
-    colors: Array,
+    totalSales: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    totalRating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     rating: {
       type: Number,
       required: true,
@@ -51,25 +52,15 @@ const Product = new Schema(
       type: String,
       required: true,
     },
-    totalOrders: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
     subCategory: String,
     available: {
       type: Boolean,
       required: true,
+      default: true,
     },
-    // sellerId: {
-    //   type: Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: "Merchant",
-    // },
-    views: {
-      type: Number,
-      required: true,
-      default: 0,
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
   },
   {
@@ -77,4 +68,4 @@ const Product = new Schema(
   }
 );
 
-module.exports = mongoose.model("Product", Product);
+module.exports = mongoose.model("Brand", Brand);

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NODE_RESET_URL } from "../../../constants";
+import { NODE_RESET_URL } from "../../../utils/constants";
 
 export default async function handler(
   req: NextApiRequest,

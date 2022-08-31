@@ -250,10 +250,64 @@ const resetPasswordController = asyncHandler(async (req, res) => {
   }
 });
 
+const adminLoginController = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      res.status(400);
+      throw new Error("Please fill all the fields");
+    }
+    const user = await Customer.findOne({
+      email,
+    });
+    if (user) {
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (passwordMatch) {
+        if (user.isAdmin) {
+          res.status(200).json({
+            message: "Login Successful",
+            success: true,
+            data: {
+              id: user._id,
+              name: user.name,
+              email: user.email,
+              phone: user.phone,
+              address: user.address,
+              cart: user.cart,
+              orders: user.orders,
+              token: generateJWTToken(user._id),
+            },
+          });
+        } else {
+          res.status(400).json({
+            message: "Access Denied",
+            success: false,
+          });
+        }
+      } else {
+        throw new Error("Invalid Password");
+      }
+    } else {
+      // res.status(400).json({
+      //   message: "Invalid Email Address",
+      //   success: false,
+      // });
+      throw new Error("Invalid Email Address");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: error.message,
+      success: false,
+    });
+  }
+});
+
 module.exports = {
   loginController,
   registerController,
   requestPasswordController,
   resetPasswordController,
   logoutController,
+  adminLoginController,
 };
