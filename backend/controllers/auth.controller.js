@@ -142,7 +142,7 @@ const requestPasswordController = asyncHandler(async (req, res) => {
       }).save();
 
       if (saveToken) {
-        const requestTokenUrl = `${process.env.CLIENT_URI}/reset/?token=${newToken}&from=${email}`;
+        const requestTokenUrl = `${process.env.CLIENT_URI}/auth/reset/?token=${newToken}&from=${email}`;
         res.status(200).json({
           message: "Password Reset Link Sent, Expires in 3 hours",
           success: true,
@@ -182,11 +182,12 @@ const logoutController = asyncHandler(async (req, res) => {
 const resetPasswordController = asyncHandler(async (req, res) => {
   const { email, token, password } = req.body;
   try {
-    if (!password) {
-      throw new Error("Enter your password");
-    }
-    if (!token || !email) {
+    if (!password || !email) {
       throw new Error("Invalid credentials");
+    }
+
+    if (!token) {
+      throw new Error("Enter your password");
     }
 
     const findToken = await PasswordReset.findOne({

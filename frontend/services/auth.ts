@@ -2,7 +2,12 @@ import React from "react";
 import { toast } from "react-toastify";
 import { fetchFunc } from "../utils/fetchFunc";
 import { User } from "../types/userTypes";
-import { NEXT_LOGIN_URL, NEXT_REGISTER_URL } from "../constants";
+import {
+  NEXT_FORGOT_URL,
+  NEXT_LOGIN_URL,
+  NEXT_REGISTER_URL,
+  NEXT_RESET_URL,
+} from "../constants";
 
 export const loginUser = async (
   event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -72,16 +77,34 @@ export const registerUser = async (
   setIsLoading(false);
 };
 
-const forgotPassword = async (
+export const forgotPassword = async (
+  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  email: string,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  event.preventDefault();
+
+  const result = await fetchFunc(NEXT_FORGOT_URL!, { email }, "POST");
+  if (!result.success) {
+    toast.error(result.message);
+  } else {
+    toast.success(result.message);
+  }
+  setIsLoading(false);
+};
+
+export const resetPassword = async (
   event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   formData: {
+    password: string;
     email: string;
+    token: string;
   },
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   event.preventDefault();
 
-  const result = await fetchFunc(NEXT_LOGIN_URL!, formData, "POST");
+  const result = await fetchFunc(NEXT_RESET_URL!, formData, "POST");
   if (!result.success) {
     toast.error(result.message);
   } else {

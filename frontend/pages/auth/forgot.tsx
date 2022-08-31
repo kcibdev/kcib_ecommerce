@@ -1,16 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { FaFacebookSquare } from "react-icons/fa";
-import { BsGoogle } from "react-icons/bs";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+
+import useAuthStore from "../../store/useAuthStore";
+import { forgotPassword } from "../../services/auth";
+import { PulseLoader } from "react-spinners";
 
 type Props = {};
 
 const ForgotPage = (props: Props) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailData, setEmailData] = useState("");
+  const isLoggedIn = useAuthStore((state) => state.isAuthenticated);
+  const router = useRouter();
   const btnStyles =
     "forgot__btn w-full rounded flex items-center justify-center py-[0.6rem] shadow-md relative font-semibold text-white hover:scale-95 transition ease-in-out delay-150 duration-200";
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailData(event.target.value);
+  };
+
+  const onSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+
+    if (!emailData) {
+      toast.error("Please Enter your email address!");
+      return;
+    }
+    setIsLoading(true);
+    forgotPassword(event, emailData, setIsLoading);
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
+  }, [isLoggedIn]);
   return (
     <>
       <Head>
@@ -41,6 +70,9 @@ const ForgotPage = (props: Props) => {
                   className="forgot__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
                   id="email"
                   required
+                  name="email"
+                  value={emailData}
+                  onChange={onInputChange}
                 />
                 <div className="underline"></div>
                 <label
@@ -50,13 +82,22 @@ const ForgotPage = (props: Props) => {
                   Email
                 </label>
               </div>
-              <div className="forgot__form-group">
-                <button
-                  type="submit"
-                  className={`forgot__btn--email secondary-bg ${btnStyles}`}
-                >
-                  Send Link
-                </button>
+              <div className="forgot__form-group flex justify-center flex-col">
+                {!isLoading && (
+                  <button
+                    type="submit"
+                    className={`forgot__btn--email secondary-bg ${btnStyles}`}
+                    onClick={onSubmit}
+                  >
+                    Send Link
+                  </button>
+                )}
+                <PulseLoader
+                  size={15}
+                  className="mx-auto my-3"
+                  color={"#192a56"}
+                  loading={isLoading}
+                />
               </div>
             </form>
           </div>

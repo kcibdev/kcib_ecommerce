@@ -1,13 +1,13 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NODE_LOGIN_URL } from "../../../constants";
+import { NODE_RESET_URL } from "../../../constants";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   await axios
-    .post(NODE_LOGIN_URL, req.body)
+    .post(NODE_RESET_URL, req.body)
     .then((response) => {
       res.status(200).json(response.data);
     })

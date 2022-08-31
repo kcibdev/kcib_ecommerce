@@ -6,9 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { name, phone, email, password } = req.body;
   await axios
-    .post(NODE_REGISTER_URL, { name, phone, email, password })
+    .post(NODE_REGISTER_URL, req.body)
     .then((response) => {
       res.status(200).json(response.data);
     })
