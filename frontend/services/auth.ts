@@ -2,23 +2,18 @@ import React from "react";
 import { toast } from "react-toastify";
 import { fetchFunc } from "../utils/fetchFunc";
 import { User } from "../types/userTypes";
-import {
-  NEXT_FORGOT_URL,
-  NEXT_LOGIN_URL,
-  NEXT_REGISTER_URL,
-  NEXT_RESET_URL,
-  NEXT_ACCESS_URL,
-} from "../utils/constants";
+import { NEXT_PUBLIC_URL, NODE_FORGOT_URL } from "../utils/constants";
 
 export const loginUser = async (
   formData: {
     email: string;
     password: string;
+    url: string;
   },
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setUserAccount: (user: User) => Promise<void>
 ) => {
-  const result = await fetchFunc(NEXT_LOGIN_URL!, formData, "POST");
+  const result = await fetchFunc(NEXT_PUBLIC_URL!, formData, "POST");
   if (!result.success) {
     toast.error(result.message);
   } else {
@@ -44,11 +39,12 @@ export const accessLoginUser = async (
   formData: {
     email: string;
     password: string;
+    url: string;
   },
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setAdminAccount: (user: User) => Promise<void>
 ) => {
-  const result = await fetchFunc(NEXT_ACCESS_URL!, formData, "POST");
+  const result = await fetchFunc(formData.url, formData, "POST");
   if (!result.success) {
     toast.error(result.message);
   } else {
@@ -76,11 +72,12 @@ export const registerUser = async (
     email: string;
     phone: string;
     password: string;
+    url: string;
   },
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setUserAccount: (user: User) => Promise<void>
 ) => {
-  const result = await fetchFunc(NEXT_REGISTER_URL!, formData, "POST");
+  const result = await fetchFunc(formData.url, formData, "POST");
 
   if (!result.success) {
     toast.error(result.message);
@@ -106,7 +103,11 @@ export const forgotPassword = async (
   email: string,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const result = await fetchFunc(NEXT_FORGOT_URL!, { email }, "POST");
+  const result = await fetchFunc(
+    NODE_FORGOT_URL,
+    { email, url: NODE_FORGOT_URL },
+    "POST"
+  );
   if (!result.success) {
     toast.error(result.message);
   } else {
@@ -120,10 +121,11 @@ export const resetPassword = async (
     password: string;
     email: string;
     token: string;
+    url: string;
   },
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const result = await fetchFunc(NEXT_RESET_URL!, formData, "POST");
+  const result = await fetchFunc(formData.url, formData, "POST");
   if (!result.success) {
     toast.error(result.message);
   } else {

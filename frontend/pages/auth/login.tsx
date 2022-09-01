@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import PulseLoader from "react-spinners/PulseLoader";
 import useAuthStore from "../../store/useAuthStore";
 import { loginUser } from "../../services/auth";
+import { NODE_LOGIN_URL } from "../../utils/constants";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const LoginPage = (props: Props) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    url: NODE_LOGIN_URL,
   });
   const { setUserAccount, isAuthenticated } = useAuthStore((state) => state);
   const router = useRouter();

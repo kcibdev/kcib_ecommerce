@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import useAuthStore from "../../store/useAuthStore";
 import { forgotPassword, resetPassword } from "../../services/auth";
 import { PulseLoader } from "react-spinners";
+import { NODE_RESET_URL } from "../../utils/constants";
 
 type Props = {};
 
@@ -45,7 +46,12 @@ const ResetPassword = (props: Props) => {
     }
     setIsLoading(true);
     resetPassword(
-      { password: passwords.password, token: token!, email: fromEmail! },
+      {
+        password: passwords.password,
+        token: token!,
+        email: fromEmail!,
+        url: NODE_RESET_URL,
+      },
       setIsLoading
     );
   };

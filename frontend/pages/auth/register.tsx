@@ -9,6 +9,7 @@ import useAuthStore from "../../store/useAuthStore";
 import { toast } from "react-toastify";
 import { registerUser } from "../../services/auth";
 import { PulseLoader } from "react-spinners";
+import { NODE_REGISTER_URL } from "../../utils/constants";
 
 type Props = {};
 
@@ -20,6 +21,7 @@ const RegisterPage = (props: Props) => {
     email: "",
     phone: "",
     password: "",
+    url: NODE_REGISTER_URL,
   });
   const { setUserAccount, isAuthenticated } = useAuthStore((state) => state);
   const router = useRouter();

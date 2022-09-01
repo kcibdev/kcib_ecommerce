@@ -4,6 +4,10 @@ import { PulseLoader } from "react-spinners";
 
 import { AiFillCloseCircle } from "react-icons/ai";
 import { categories, Category } from "../../../../assets/data/categories";
+import { toast } from "react-toastify";
+import { createProduct } from "../../../../services/product";
+import { Product } from "../../../../types/productTypes";
+import { NODE_CREATE_PRODUCT_URL } from "../../../../utils/constants";
 
 type Props = {};
 
@@ -21,6 +25,7 @@ const AddProduct = (props: Props) => {
     quantity: string;
     sizes: string[];
     colors: string[];
+    url: string;
   }>({
     title: "",
     description: "",
@@ -33,6 +38,7 @@ const AddProduct = (props: Props) => {
     quantity: "",
     sizes: [],
     colors: [],
+    url: NODE_CREATE_PRODUCT_URL,
   });
 
   const btnStyles =
@@ -49,9 +55,46 @@ const AddProduct = (props: Props) => {
     }));
   };
 
-  const onSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.preventDefault();
-    console.log(productData);
+
+    if (
+      !productData.title ||
+      !productData.description ||
+      !productData.price ||
+      !productData.category ||
+      !productData.subCategory ||
+      !productData.quantity
+    ) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    if (!productData.image.length) {
+      toast.error("Please select product images");
+      return;
+    }
+
+    setIsLoading(true);
+
+    createProduct(setIsLoading, productData as Product);
+
+    // setProductData({
+    //   title: "",
+    //   description: "",
+    //   price: "",
+    //   discount: "",
+    //   brand: "",
+    //   image: [],
+    //   category: "",
+    //   subCategory: "",
+    //   quantity: "",
+    //   sizes: [],
+    //   colors: [],
+    // });
+
+    setIsLoading(false);
   };
   return (
     <div className="flex items-center justify-center my-10">
