@@ -49,7 +49,7 @@ const RegisterPage = (props: Props) => {
     }
 
     setIsLoading(true);
-    registerUser(event, formData, setIsLoading, setUserAccount);
+    registerUser(formData, setIsLoading, setUserAccount);
   };
 
   useEffect(() => {

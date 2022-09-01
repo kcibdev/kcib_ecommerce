@@ -11,7 +11,6 @@ import {
 } from "../utils/constants";
 
 export const loginUser = async (
-  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   formData: {
     email: string;
     password: string;
@@ -19,8 +18,6 @@ export const loginUser = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setUserAccount: (user: User) => Promise<void>
 ) => {
-  event.preventDefault();
-
   const result = await fetchFunc(NEXT_LOGIN_URL!, formData, "POST");
   if (!result.success) {
     toast.error(result.message);
@@ -44,7 +41,6 @@ export const loginUser = async (
 };
 
 export const accessLoginUser = async (
-  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   formData: {
     email: string;
     password: string;
@@ -52,8 +48,6 @@ export const accessLoginUser = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setAdminAccount: (user: User) => Promise<void>
 ) => {
-  event.preventDefault();
-
   const result = await fetchFunc(NEXT_ACCESS_URL!, formData, "POST");
   if (!result.success) {
     toast.error(result.message);
@@ -77,7 +71,6 @@ export const accessLoginUser = async (
 };
 
 export const registerUser = async (
-  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   formData: {
     name: string;
     email: string;
@@ -87,8 +80,6 @@ export const registerUser = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setUserAccount: (user: User) => Promise<void>
 ) => {
-  event.preventDefault();
-
   const result = await fetchFunc(NEXT_REGISTER_URL!, formData, "POST");
 
   if (!result.success) {
@@ -112,12 +103,9 @@ export const registerUser = async (
 };
 
 export const forgotPassword = async (
-  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   email: string,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  event.preventDefault();
-
   const result = await fetchFunc(NEXT_FORGOT_URL!, { email }, "POST");
   if (!result.success) {
     toast.error(result.message);
@@ -128,7 +116,6 @@ export const forgotPassword = async (
 };
 
 export const resetPassword = async (
-  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   formData: {
     password: string;
     email: string;
@@ -136,8 +123,6 @@ export const resetPassword = async (
   },
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  event.preventDefault();
-
   const result = await fetchFunc(NEXT_RESET_URL!, formData, "POST");
   if (!result.success) {
     toast.error(result.message);

@@ -32,7 +32,7 @@ const ForgotPage = (props: Props) => {
       return;
     }
     setIsLoading(true);
-    forgotPassword(event, emailData, setIsLoading);
+    forgotPassword(emailData, setIsLoading);
   };
 
   useEffect(() => {

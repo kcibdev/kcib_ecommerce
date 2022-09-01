@@ -42,7 +42,7 @@ const LoginPage = (props: Props) => {
       return;
     }
     setIsLoading(true);
-    loginUser(event, formData, setIsLoading, setUserAccount);
+    loginUser(formData, setIsLoading, setUserAccount);
   };
 
   useEffect(() => {

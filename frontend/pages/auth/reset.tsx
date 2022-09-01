@@ -45,7 +45,6 @@ const ResetPassword = (props: Props) => {
     }
     setIsLoading(true);
     resetPassword(
-      event,
       { password: passwords.password, token: token!, email: fromEmail! },
       setIsLoading
     );

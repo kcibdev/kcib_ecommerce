@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { banners } from "../../assets/data/banner";
-import { categories } from "../../assets/data/categories";
+import { categories, Category } from "../../assets/data/categories";
 
 type Props = {};
 
@@ -30,14 +30,14 @@ const HomeSection = (props: Props) => {
       <div className="home__categories hidden md:block bg-white rounded-sm mx-2">
         <ul className="home__categories--lists pr-4 py-3 px-3">
           {categories.map(
-            (category, index) =>
-              category !== "All" && (
+            (category: Category, index) =>
+              category.category !== "All" && (
                 <Link href={`/category/${category}`} key={index}>
                   <li
                     className="home__categories--list px-4 py-[0.35rem] hover:underline cursor-pointer font-medium text-base"
-                    key={index}
+                    key={category.id}
                   >
-                    {category}
+                    {category.category}
                   </li>
                 </Link>
               )

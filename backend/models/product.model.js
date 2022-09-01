@@ -21,9 +21,8 @@ const Product = new Schema(
     },
     image: [
       {
-        type: Buffer,
+        type: String,
         required: true,
-        contentType: String,
       },
     ],
     brand: {
@@ -60,12 +59,13 @@ const Product = new Schema(
     available: {
       type: Boolean,
       required: true,
+      default: true,
     },
-    // sellerId: {
-    //   type: Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: "Merchant",
-    // },
+    sellerId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Merchant",
+    },
     views: {
       type: Number,
       required: true,

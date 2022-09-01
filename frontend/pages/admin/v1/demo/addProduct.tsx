@@ -3,6 +3,7 @@ import Image from "next/image";
 import { PulseLoader } from "react-spinners";
 
 import { AiFillCloseCircle } from "react-icons/ai";
+import { categories, Category } from "../../../../assets/data/categories";
 
 type Props = {};
 
@@ -13,6 +14,7 @@ const AddProduct = (props: Props) => {
     description: string;
     price: string;
     discount: string;
+    brand: string;
     image: File[];
     category: string;
     subCategory: string;
@@ -24,6 +26,7 @@ const AddProduct = (props: Props) => {
     description: "",
     price: "",
     discount: "",
+    brand: "",
     image: [],
     category: "",
     subCategory: "",
@@ -35,7 +38,11 @@ const AddProduct = (props: Props) => {
   const btnStyles =
     "login__btn w-full rounded flex items-center justify-center py-[0.6rem] shadow-md relative font-semibold text-white hover:scale-95 transition ease-in-out delay-150 duration-200";
 
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setProductData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -47,7 +54,7 @@ const AddProduct = (props: Props) => {
     console.log(productData);
   };
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center my-10">
       <div className="addProduct__container bg-white p-4 shadow-md rounded-md w-full max-w-[400px]">
         <div className="login__header text-center mt-3">
           <h1 className="text-2xl font-bold mb-2">Add Product</h1>
@@ -66,7 +73,7 @@ const AddProduct = (props: Props) => {
             <div className="underline"></div>
             <label
               htmlFor="title"
-              className="addProduct__label title absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+              className="addProduct__label cursor-text title absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
             >
               Title
             </label>
@@ -84,7 +91,7 @@ const AddProduct = (props: Props) => {
             <div className="underline"></div>
             <label
               htmlFor="price"
-              className="addProduct__label price absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+              className="addProduct__label cursor-text price absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
             >
               Price
             </label>
@@ -102,13 +109,16 @@ const AddProduct = (props: Props) => {
             <div className="underline"></div>
             <label
               htmlFor="discount"
-              className="addProduct__label discount absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+              className="addProduct__label cursor-text discount absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
             >
               Discount
             </label>
           </div>
           <div className="addProduct__form-group form__input relative w-full h-auto my-4">
-            <label htmlFor="images" className="addProduct__label discount">
+            <label
+              htmlFor="images"
+              className="addProduct__label cursor-text discount"
+            >
               <input
                 className="hidden"
                 id="images"
@@ -173,6 +183,175 @@ const AddProduct = (props: Props) => {
                   </div>
                 ))}
             </div>
+          </div>
+          <div className="addProduct__form-group form__input relative w-full h-[45px] my-4">
+            <select
+              name="category"
+              id="category"
+              className="addProduct__select w-full h-full outline-none"
+              onChange={onInputChange}
+            >
+              <option className="text-gray-400 text-sm">Select Category</option>
+              {categories.map((category: Category) => {
+                if (category.category !== "All") {
+                  return (
+                    <option key={category.id} value={category.category}>
+                      {category.category}
+                    </option>
+                  );
+                }
+              })}
+            </select>
+          </div>
+          <div className="addProduct__form-group form__input relative w-full h-[45px] my-4">
+            <select
+              name="subCategory"
+              id="subCategory"
+              className="addProduct__select w-full h-full outline-none"
+              onChange={onInputChange}
+            >
+              <option className="text-gray-400 text-sm">
+                Select SubCategory
+              </option>
+              {categories.map((category: Category) => {
+                if (category.category === productData.category) {
+                  return category.subCategories.map((subCategory) => (
+                    <option key={subCategory} value={subCategory}>
+                      {subCategory}
+                    </option>
+                  ));
+                }
+              })}
+            </select>
+          </div>
+          <div className="addProduct__form-group form__input relative w-full h-[45px] my-4">
+            <input
+              type="number"
+              className="addProduct__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
+              id="quantity"
+              required
+              name="quantity"
+              value={productData.quantity}
+              onChange={onInputChange}
+            />
+            <div className="underline"></div>
+            <label
+              htmlFor="quantity"
+              className="addProduct__label cursor-text quantity absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+            >
+              Quantity Available
+            </label>
+          </div>
+          <div className="addProduct__form-group form__input relative w-full h-[45px] mt-4 mb-2">
+            <input
+              type="text"
+              className="addProduct__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
+              id="sizes"
+              required
+              name="sizes"
+              value={productData.sizes.join(",")}
+              onChange={(e) => {
+                e.preventDefault();
+                setProductData((prev) => ({
+                  ...prev,
+                  sizes: e.target.value.replaceAll(" ", "").split(","),
+                }));
+              }}
+            />
+            <div className="underline"></div>
+            <label
+              htmlFor="sizes"
+              className="addProduct__label cursor-text size absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+            >
+              Sizes (Seperated by Comma)
+            </label>
+          </div>
+          <div className="sizes__badge flex flex-wrap gap-3 mb-2">
+            {productData.sizes.map((size, index) => (
+              <div
+                key={index}
+                className="size__badge--display flex items-center justify-center gap-1 px-2 py-1 rounded-full text-sm font-semibold text-gray-600 bg-gray-200"
+              >
+                <p>{size}</p>
+                <button
+                  className="delete__btn outline-none border-none"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setProductData((prev) => ({
+                      ...prev,
+                      sizes: prev.sizes.filter((s, i) => i !== index),
+                    }));
+                  }}
+                >
+                  <AiFillCloseCircle className="text-xl text-gray-600" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="addProduct__form-group form__input relative w-full h-[45px] mt-4 mb-2">
+            <input
+              type="text"
+              className="addProduct__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
+              id="colors"
+              required
+              name="colors"
+              value={productData.colors.join(",")}
+              onChange={(e) => {
+                e.preventDefault();
+                setProductData((prev) => ({
+                  ...prev,
+                  colors: e.target.value.replaceAll(" ", "").split(","),
+                }));
+              }}
+            />
+            <div className="underline"></div>
+            <label
+              htmlFor="colors"
+              className="addProduct__label cursor-text size absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+            >
+              Colors (Seperated by Comma)
+            </label>
+          </div>
+          <div className="colors__badge flex flex-wrap gap-3 mb-2">
+            {productData.colors.map((color, index) => (
+              <div
+                key={index}
+                className="color__badge--display flex items-center justify-center gap-1 px-2 py-1 rounded-full text-sm font-semibold text-gray-600 bg-gray-200"
+              >
+                <p>{color}</p>
+                <button
+                  className="delete__btn outline-none border-none"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setProductData((prev) => ({
+                      ...prev,
+                      colors: prev.colors.filter((s, i) => i !== index),
+                    }));
+                  }}
+                >
+                  <AiFillCloseCircle className="text-xl text-gray-600" />
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="addProduct__form-group form__input relative h-auto w-full mt-5 mb-4">
+            <textarea
+              className="addProduct__input w-full h-full outline-none px-1"
+              id="description"
+              required
+              name="description"
+              value={productData.description}
+              onChange={onInputChange}
+              cols={0}
+              rows={7}
+            ></textarea>
+            <div className="underline"></div>
+            <label
+              htmlFor="description"
+              className="addProduct__label cursor-text description absolute top-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+            >
+              Description
+            </label>
           </div>
           <div className="addProduct__form-group form__input flex justify-center flex-col">
             {!isLoading && (

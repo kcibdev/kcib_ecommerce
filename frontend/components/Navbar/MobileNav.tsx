@@ -4,7 +4,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import Link from "next/link";
 
-import { categories } from "../../assets/data/categories";
+import { categories, Category } from "../../assets/data/categories";
 import ReactCountryFlag from "react-country-flag";
 import axios from "axios";
 import SearchModal from "./SearchModal";
@@ -77,13 +77,13 @@ const MobileNav = (props: Props) => {
         <div className="nav__bottom">
           <div className="nav__bottom--menu">
             <ul className="nav__botttom--categories flex snap-x overflow-x-auto">
-              {categories.map((category, index) => (
+              {categories.map((category: Category, index) => (
                 <Link href={`/category/${category}`} key={index}>
                   <li
                     className="nav__bottom--category snap-center px-4 py-3 font-medium whitespace-nowrap"
-                    key={index}
+                    key={category.id}
                   >
-                    {category}
+                    {category.category}
                   </li>
                 </Link>
               ))}

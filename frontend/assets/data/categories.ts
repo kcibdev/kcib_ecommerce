@@ -1,28 +1,19 @@
-export const categories = [
-  "All",
-  "Computer & Gaming",
-  "Mobiles & Tablets",
-  "Electronics",
-  "Home & Office",
-  "Fashion & Clothing",
-  "Health & Beauty",
-  "Books & Media",
-  "Sports & Outdoors",
-  "Automotive",
-  "Kids, Babies & Toys",
-  "Pets & Animals",
-  "Groceries",
-];
+export interface Category {
+  id: number;
+  category: string;
+  subCategories: string[];
+}
 
-export const categories_data = [
+export const categories: Category[] = [
   {
     id: 1,
     category: "All",
+    subCategories: [],
   },
   {
     id: 2,
     category: "Computer & Gaming",
-    subCategory: [
+    subCategories: [
       "Computers",
       "Laptops",
       "Desktop",
@@ -41,12 +32,12 @@ export const categories_data = [
   {
     id: 3,
     category: "Mobiles & Tablets",
-    subCategory: ["Mobiles", "Tablets", "Mobile Accessories"],
+    subCategories: ["Mobiles", "Tablets", "Mobile Accessories"],
   },
   {
     id: 4,
     category: "Electronics",
-    subCategory: [
+    subCategories: [
       "TV & Video",
       "Audio",
       "Camera",
@@ -54,6 +45,113 @@ export const categories_data = [
       "Home Audio",
       "Accessories & Parts",
       "Wearable Technology",
+      "Car Electronics & GPS",
+      "Office Electronics",
     ],
+  },
+  {
+    id: 5,
+    category: "Home & Office",
+    subCategories: [
+      "Furniture",
+      "Home Decor",
+      "Kitchen & Dining",
+      "Appliances",
+      "Household Items",
+      "Cleaning Supplies",
+      "Office Supplies",
+    ],
+  },
+  {
+    id: 6,
+    category: "Fashion & Clothing",
+    subCategories: [
+      "Women's Fashion",
+      "Men's Fashion",
+      "Kid's Fashion",
+      "Fashion Accessories",
+      "Underwear",
+    ],
+  },
+  {
+    id: 7,
+    category: "Health & Beauty",
+    subCategories: [
+      "Health Care",
+      "Skin Care",
+      "Makeup",
+      "Oral Care",
+      "Hair Care",
+      "Fragrance",
+      "Tools & Accessories",
+      "Medical Supplies & Equipment",
+      "Sexual Wellness",
+    ],
+  },
+  {
+    id: 8,
+    category: "Books & Media",
+    subCategories: ["Books", "Magazines", "Music"],
+  },
+  {
+    id: 9,
+    category: "Sports & Outdoors",
+    subCategories: [
+      "Outdoor & Adventure",
+      "Sports & Fitness",
+      "Camping & Hiking",
+      "Cycling",
+      "Fishing",
+      "Swimming",
+      "Shoes",
+    ],
+  },
+  {
+    id: 10,
+    category: "Automotive",
+    subCategories: [
+      "Car Electronics & GPS",
+      "Car Accessories",
+      "Interior Accessories",
+      "Exterior Accessories",
+      "Car Parts",
+      "Motorcycle Accessories",
+      "Oil & Fluids",
+      "Tools, Maintenance & Care",
+      "Replacement Parts",
+    ],
+  },
+  {
+    id: 11,
+    category: "Kids, Babies & Toys",
+    subCategories: [
+      "Baby & Toddler Toys",
+      "Apparel & Accessories",
+      "Mother & Baby Items",
+      "Feeding",
+      "Diapering",
+      "Bathing & Skin Care",
+      "Health & Safety",
+      "Baby Gear",
+    ],
+  },
+  {
+    id: 12,
+    category: "Pets & Animals",
+    subCategories: [
+      "Pet Food & Supplies",
+      "Pet Accessories",
+      "Dogs",
+      "Cats",
+      "Birds",
+      "Fish & Aquariums",
+      "Reptiles & Amphibians",
+      "Small Animals",
+    ],
+  },
+  {
+    id: 13,
+    category: "Groceries",
+    subCategories: ["Beverages", "Food", "Snacks", "Candy & Chocolate"],
   },
 ];

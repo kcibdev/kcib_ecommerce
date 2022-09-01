@@ -25,6 +25,14 @@
   font-size: 13px;
 }
 
-.form__input input:focus ~ .underline::before {
+.form__input textarea:focus ~ label,
+.form__input textarea:valid ~ label {
+  color: #415;
+  transform: translateY(-25px);
+  font-size: 13px;
+}
+
+.form__input input:focus ~ .underline::before,
+.form__input textarea:focus ~ .underline::before {
   transform: translateX(0%);
 }
