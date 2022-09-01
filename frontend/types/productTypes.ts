@@ -11,5 +11,6 @@ export interface Product {
   quantity: string;
   sizes: string[];
   colors: string[];
+  sellerId: string;
   url: string;
 }

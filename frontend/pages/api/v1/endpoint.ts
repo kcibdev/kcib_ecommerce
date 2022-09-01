@@ -1,12 +1,18 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const config: AxiosRequestConfig = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: req.headers?.authorization!,
+    },
+  };
   await axios
-    .post(req.body.url, req.body)
+    .post(req.body.url, req.body, config)
     .then((response) => {
       console.log("response.data", response.data);
       res.status(200).json(response.data);

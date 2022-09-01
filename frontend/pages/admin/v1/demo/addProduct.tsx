@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { PulseLoader } from "react-spinners";
 
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -8,10 +9,14 @@ import { toast } from "react-toastify";
 import { createProduct } from "../../../../services/product";
 import { Product } from "../../../../types/productTypes";
 import { NODE_CREATE_PRODUCT_URL } from "../../../../utils/constants";
+import useAuthStore from "../../../../store/useAuthStore";
 
 type Props = {};
 
 const AddProduct = (props: Props) => {
+  const { userAccount, isAuthenticated, isAdministrator } = useAuthStore(
+    (state) => state
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [productData, setProductData] = useState<{
     title: string;
@@ -25,6 +30,7 @@ const AddProduct = (props: Props) => {
     quantity: string;
     sizes: string[];
     colors: string[];
+    sellerId: string;
     url: string;
   }>({
     title: "",
@@ -38,9 +44,10 @@ const AddProduct = (props: Props) => {
     quantity: "",
     sizes: [],
     colors: [],
+    sellerId: userAccount?.id,
     url: NODE_CREATE_PRODUCT_URL,
   });
-
+  const router = useRouter();
   const btnStyles =
     "login__btn w-full rounded flex items-center justify-center py-[0.6rem] shadow-md relative font-semibold text-white hover:scale-95 transition ease-in-out delay-150 duration-200";
 
@@ -78,7 +85,7 @@ const AddProduct = (props: Props) => {
 
     setIsLoading(true);
 
-    createProduct(setIsLoading, productData as Product);
+    createProduct(setIsLoading, productData as Product, userAccount.token);
 
     // setProductData({
     //   title: "",
@@ -93,16 +100,21 @@ const AddProduct = (props: Props) => {
     //   sizes: [],
     //   colors: [],
     // });
-
-    setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (!isAuthenticated || !isAdministrator) {
+      router.push("/admin/auth");
+    }
+  }, [isAuthenticated]);
+
   return (
     <div className="flex items-center justify-center my-10">
       <div className="addProduct__container bg-white p-4 shadow-md rounded-md w-full max-w-[400px]">
         <div className="login__header text-center mt-3">
           <h1 className="text-2xl font-bold mb-2">Add Product</h1>
         </div>
-        <form className="addProduct__form">
+        <form className="addProduct__form" encType="multipart/form-data">
           <div className="addProduct__form-group form__input relative w-full h-[45px] my-4">
             <input
               type="text"
@@ -157,6 +169,7 @@ const AddProduct = (props: Props) => {
               Discount
             </label>
           </div>
+
           <div className="addProduct__form-group form__input relative w-full h-auto my-4">
             <label
               htmlFor="images"
@@ -226,6 +239,24 @@ const AddProduct = (props: Props) => {
                   </div>
                 ))}
             </div>
+          </div>
+          <div className="addProduct__form-group form__input relative w-full h-[45px] my-4">
+            <input
+              type="text"
+              className="addProduct__input w-full h-full outline-none border-b-2 border-gray-200 px-1"
+              id="brand"
+              required
+              name="brand"
+              value={productData.brand}
+              onChange={onInputChange}
+            />
+            <div className="underline"></div>
+            <label
+              htmlFor="brand"
+              className="addProduct__label cursor-text brand absolute bottom-[10px] left-0 text-base text-[#aaa] transition ease-in-out delay-150 duration-300"
+            >
+              Brand
+            </label>
           </div>
           <div className="addProduct__form-group form__input relative w-full h-[45px] my-4">
             <select

@@ -18,6 +18,7 @@ export const NODE_CREATE_PRODUCT_URL: string =
   `${NODE_BASE_URL}${process.env.NEXT_PUBLIC_NODE_CREATE_PRODUCT_URL}`!;
 
 export const NODE_IMAGE_URL: string =
-  `${BASE_URL}${process.env.NEXT_PUBLIC_NODE_IMAGE_URL}`!;
+  `${NODE_BASE_URL}${process.env.NEXT_PUBLIC_NODE_IMAGE_URL}`!;
+export const NEXT_IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL!;
 
 export const NEXT_PUBLIC_URL: string = process.env.NEXT_PUBLIC_URL!;

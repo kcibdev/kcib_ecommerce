@@ -27,7 +27,7 @@ const Product = new Schema(
     ],
     brand: {
       type: String,
-      required: true,
+      default: "",
     },
     quantity: {
       type: Number,

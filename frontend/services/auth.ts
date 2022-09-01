@@ -13,7 +13,7 @@ export const loginUser = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setUserAccount: (user: User) => Promise<void>
 ) => {
-  const result = await fetchFunc(NEXT_PUBLIC_URL!, formData, "POST");
+  const result = await fetchFunc(NEXT_PUBLIC_URL, formData, "POST");
   if (!result.success) {
     toast.error(result.message);
   } else {

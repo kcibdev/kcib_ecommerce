@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import PulseLoader from "react-spinners/PulseLoader";
 import useAuthStore from "../../../store/useAuthStore";
 import { accessLoginUser } from "../../../services/auth";
+import { NODE_ACCESS_URL } from "../../../utils/constants";
 
 type Props = {};
 
@@ -17,6 +18,7 @@ const AdminLogin = (props: Props) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    url: NODE_ACCESS_URL,
   });
   const { setAdminAccount, isAuthenticated, isAdministrator } = useAuthStore(
     (state) => state
@@ -43,7 +45,7 @@ const AdminLogin = (props: Props) => {
       return;
     }
     setIsLoading(true);
-    accessLoginUser(event, formData, setIsLoading, setAdminAccount);
+    accessLoginUser(formData, setIsLoading, setAdminAccount);
   };
 
   useEffect(() => {

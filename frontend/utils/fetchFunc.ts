@@ -9,12 +9,15 @@ interface Data {
 export const fetchFunc = async (
   url: string,
   bodyObject: any,
-  fetchMethod: string
+  fetchMethod: string,
+  token = ""
 ): Promise<Data> => {
+  console.log("fetchFunc", url, bodyObject, fetchMethod);
   return await fetch(url, {
     method: fetchMethod,
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
     body: JSON.stringify(bodyObject),
   })
