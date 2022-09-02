@@ -132,8 +132,27 @@ const searchProductController = asyncHandler(async (req, res, next) => {
     next(error);
   }
 });
-const getBestProductController = asyncHandler(async (req, res, next) => {});
-const getTopProductController = asyncHandler(async (req, res, next) => {});
+const getNewestProductController = asyncHandler(async (req, res, next) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+
+    if (!products) {
+      return res.status(400).json({
+        success: false,
+        message: "No products found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+const getPopularProductController = asyncHandler(async (req, res, next) => {});
+const getFeaturedProductController = asyncHandler(async (req, res, next) => {});
 const getSimilerProductController = asyncHandler(async (req, res, next) => {
   const { id: productId } = req.params;
   try {
@@ -239,8 +258,9 @@ module.exports = {
   updateProductController,
   deleteProductController,
   searchProductController,
-  getBestProductController,
-  getTopProductController,
+  getPopularProductController,
+  getFeaturedProductController,
+  getNewestProductController,
   getSimilerProductController,
   updateViewsController,
   getReviewsController,

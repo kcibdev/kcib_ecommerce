@@ -26,7 +26,7 @@ const Product = (props: Props) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const images = [
-    "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+    "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/34/619476/1.jpg?1826",
     "https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
     "https://ae01.alicdn.com/kf/H47ae7ff5c98941c2ae35d879979fdf0bX/Hotwav-Cyber-9-Pro-4G-Rugged-Smartphone-Helio-P60-Octa-Core-6-3-8GB-128GB-7500mAh.jpg_Q90.jpg_.webp",
   ];

@@ -7,9 +7,10 @@ const {
   updateProductController,
   deleteProductController,
   searchProductController,
-  getBestProductController,
-  getTopProductController,
+  getPopularProductController,
+  getFeaturedProductController,
   getSimilerProductController,
+  getNewestProductController,
   updateViewsController,
   getReviewsController,
   createReviewController,
@@ -25,8 +26,9 @@ router.post("/:id/views", updateViewsController);
 router.get("/:id/reviews", getReviewsController);
 router.post("/:id/reviews", authorizedUser, createReviewController);
 router.get("/search/:keyword", searchProductController);
-router.get("/best", getBestProductController);
-router.get("/top", getTopProductController);
+router.get("/popular", getPopularProductController);
+router.get("/featured", getFeaturedProductController);
+router.get("/newest", getNewestProductController);
 router.get("/similer", getSimilerProductController);
 
 module.exports = router;
