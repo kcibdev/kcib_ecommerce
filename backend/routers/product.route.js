@@ -14,6 +14,7 @@ const {
   updateViewsController,
   getReviewsController,
   createReviewController,
+  getProductByCategoryController,
 } = require("../controllers/product.controller");
 const { authorizedUser } = require("../middlewares/verifyToken");
 
@@ -30,5 +31,6 @@ router.get("/popular", getPopularProductController);
 router.get("/featured", getFeaturedProductController);
 router.get("/newest", getNewestProductController);
 router.get("/similer", getSimilerProductController);
+router.get("/category/:category", getProductByCategoryController);
 
 module.exports = router;

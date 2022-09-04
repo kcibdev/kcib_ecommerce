@@ -63,6 +63,9 @@ const createProductController = asyncHandler(async (req, res, next) => {
     next(error);
   }
 });
+
+//Update product
+//@route PUT /api/v1/product/:id
 const updateProductController = asyncHandler(async (req, res, next) => {
   const { id: productId } = req.params;
   try {
@@ -87,6 +90,9 @@ const updateProductController = asyncHandler(async (req, res, next) => {
     console.log(error);
   }
 });
+
+// Delete product
+// @route DELETE /api/v1/product/:id
 const deleteProductController = asyncHandler(async (req, res, next) => {
   const { id: productId } = req.params;
   try {
@@ -110,6 +116,9 @@ const deleteProductController = asyncHandler(async (req, res, next) => {
     next(error);
   }
 });
+
+// Search product
+// @route GET /api/v1/product/search/:keyword
 const searchProductController = asyncHandler(async (req, res, next) => {
   const { search } = req.query;
   try {
@@ -251,6 +260,27 @@ const createReviewController = asyncHandler(async (req, res, next) => {
   }
 });
 
+const getProductByCategoryController = asyncHandler(async (req, res, next) => {
+  const { category } = req.params;
+  try {
+    const products = await Product.find({ category });
+
+    if (!products) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = {
   getProductsController,
   getProductController,
@@ -265,4 +295,5 @@ module.exports = {
   updateViewsController,
   getReviewsController,
   createReviewController,
+  getProductByCategoryController,
 };

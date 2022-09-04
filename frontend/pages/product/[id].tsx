@@ -4,13 +4,15 @@ import Link from "next/link";
 import {
   MdOutlineFavoriteBorder,
   MdFavorite,
-  MdStar,
-  MdStarHalf,
-  MdStarOutline,
   MdRemoveCircleOutline,
   MdAddCircleOutline,
 } from "react-icons/md";
-import { FaShoppingCart } from "react-icons/fa";
+import {
+  FaRegStar,
+  FaShoppingCart,
+  FaStar,
+  FaStarHalfAlt,
+} from "react-icons/fa";
 import { BsBagCheckFill } from "react-icons/bs";
 
 import { numberFormat } from "../../utils/numberFormatter";
@@ -25,6 +27,7 @@ const Product = (props: Props) => {
   const [prevMainImage, setPrevMainImage] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const [selectedTab, setSelectedTab] = useState(0);
   const images = [
     "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/34/619476/1.jpg?1826",
     "https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -41,6 +44,10 @@ const Product = (props: Props) => {
         setQuantity(quantity - 1);
       }
     }
+  };
+
+  const changeTab = (index: number) => {
+    setSelectedTab(index);
   };
 
   const setMainImageHandler = (
@@ -157,19 +164,20 @@ const Product = (props: Props) => {
                   </Link>
                 </p>
               </div>
-
-              <div className="product__details--rating flex items-center mb-2 cursor-pointer">
-                <div className="product__rating--stars flex items-center mr-2">
-                  <MdStar className="text-xl secondary-color" />
-                  <MdStar className="text-xl secondary-color" />
-                  <MdStar className="text-xl secondary-color" />
-                  <MdStarHalf className="text-xl secondary-color" />
-                  <MdStarOutline className="text-xl secondary-color" />
+              <Link href="#reviews">
+                <div className="product__details--rating flex items-center mb-2 cursor-pointer">
+                  <div className="product__rating--stars flex items-center mr-2">
+                    <FaStar className="text-base secondary-color" />
+                    <FaStar className="text-base secondary-color" />
+                    <FaStar className="text-base secondary-color" />
+                    <FaStarHalfAlt className="text-base secondary-color" />
+                    <FaRegStar className="text-base secondary-color" />
+                  </div>
+                  <div className="product__rating--reviews text-sm md:text-base font-normal light-primary-color hover:underline">
+                    <p>(23 ratings | 10 Reviews)</p>
+                  </div>
                 </div>
-                <div className="product__rating--reviews text-sm md:text-base font-normal light-primary-color hover:underline">
-                  <p>(23 ratings | 10 Reviews)</p>
-                </div>
-              </div>
+              </Link>
               <hr />
               <div className="product__details--price pb-2 pt-2">
                 <p className="text-[1.5rem] font-semibold mb-1">
@@ -204,6 +212,7 @@ const Product = (props: Props) => {
                       type="number"
                       className="product__quantity--input number max-w-[80px] border-none outline-none bg-white text-center"
                       value={quantity}
+                      max={10}
                       disabled
                     />
                     <button
@@ -220,24 +229,34 @@ const Product = (props: Props) => {
                     <div className="product__color--list flex items-center flex-wrap">
                       {colors.map((color, index) => (
                         <div
-                          className="product__color w-7 h-7 rounded-full border border-gray-200 cursor-pointer hover:border-gray-500 mr-2 md:mr-4"
+                          className={`product__color w-7 h-7 rounded-full border ${
+                            selectedColor === color
+                              ? "border-black"
+                              : "border-gray-200"
+                          } cursor-pointer mr-2 md:mr-4`}
                           style={{
                             backgroundColor: color,
                           }}
                           onClick={() => setSelectedColor(color)}
+                          key={index}
                         ></div>
                       ))}
                     </div>
                   </div>
                 )}
-                {sizes && (
+                {sizes.length && (
                   <div className="product__misc--sizes flex items-center">
                     <p className="text-base font-medium mr-3">Size:</p>
                     <div className="product__size--list flex items-center flex-wrap">
                       {sizes.map((size, index) => (
                         <div
-                          className="product__size text-sm md:text-base font-semibold px-3 py-1 rounded border border-gray-200 cursor-pointer hover:border-gray-500 mr-2 md:mr-4 "
+                          className={`product__size text-sm md:text-base font-semibold px-3 py-1 rounded border ${
+                            selectedSize === size
+                              ? "border-black"
+                              : "border-gray-200"
+                          }  cursor-pointer mr-2 md:mr-4`}
                           onClick={() => setSelectedSize(size)}
+                          key={index}
                         >
                           {size}
                         </div>
@@ -262,6 +281,116 @@ const Product = (props: Props) => {
               </div>
             </div>
           </div>
+          <div className="product__detail--tab bg-white rounded shadow-md w-full mt-2 md:mt-4">
+            <div className="detail__tab--bar">
+              <ul className="tab__bar--lists flex items-center">
+                <li
+                  className={`tab__bar--item py-2 px-3 text-center font-semibold text-base cursor-pointer transition duration-200 border-b-2 border-b-transparent hover:border-b-black description__tab ${
+                    selectedTab === 0 && "active"
+                  }`}
+                  onClick={() => changeTab(0)}
+                >
+                  <span className="tab__item--text">Description</span>
+                </li>
+                <li
+                  className={`tab__bar--item py-2 px-3 text-center font-semibold text-base cursor-pointer transition duration-200 border-b-2 border-b-transparent hover:border-b-black reviews__tab ${
+                    selectedTab === 1 && "active"
+                  }`}
+                  onClick={() => changeTab(1)}
+                >
+                  <span className="tab__item--text">Reviews</span>
+                </li>
+                <li
+                  className={`tab__bar--item py-2 px-3 text-center font-semibold text-base cursor-pointer transition duration-200 border-b-2 border-b-transparent hover:border-b-black specification__tab ${
+                    selectedTab === 2 && "active"
+                  }`}
+                  onClick={() => changeTab(2)}
+                >
+                  <span className="tab__item--text">Specification</span>
+                </li>
+              </ul>
+            </div>
+            <hr />
+            <div className="detail__tab--content p-4">
+              <div
+                className={`product__descriptions ${
+                  selectedTab !== 0 && "hidden"
+                }`}
+              >
+                <div
+                  className="product__description--body text-left"
+                  id="description"
+                >
+                  <p className="text-base font-normal">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Quos commodi praesentium magni? Quisquam provident qui
+                    doloremque nemo voluptas necessitatibus voluptatem expedita
+                    quae itaque at nostrum architecto minus repellat assumenda,
+                    repellendus dicta suscipit cupiditate aperiam veniam rerum
+                    tempore commodi officia. Impedit animi debitis <br />
+                    <br />
+                    commodi officia adipisci qui aspernatur? Quo at neque nisi
+                    assumenda totam consequuntur, aperiam delectus esse ratione
+                    quod eum dolorum tempora quibusdam facere nihil ducimus quos
+                    iste, non magni reiciendis dicta illo aspernatur perferendis
+                    accusamus? At hic repudiandae magni accusamus error esse ea
+                    praesentium reiciendis. Aliquam, adipisci eaque! Aspernatur
+                    fuga, iste consequatur nihil voluptatum itaque mollitia ea
+                    modi hic aut doloribus iusto, consequuntur ut tempora sed!
+                    Dignissimos atque assumenda consequuntur minima porro
+                    voluptates sed asperiores sit incidunt quis itaque quod id
+                    vel harum qui <br />
+                    <br />
+                    cupiditate consectetur perspiciatis veniam, omnis iure
+                    expedita nam non corrupti! Veritatis impedit iste vel
+                    laudantium qui aspernatur dolores aliquid labore, autem
+                    doloremque voluptatibus eos tempora, harum aut unde
+                    perferendis, dicta facilis natus temporibus? Asperiores
+                    voluptates omnis blanditiis quis ut exercitationem,
+                    veritatis expedita unde ipsum officia praesentium corporis
+                    provident eum cumque consectetur harum eius! Culpa itaque
+                    obcaecati saepe ut cupiditate magni error, aliquid quidem
+                    possimus, corporis maxime perferendis consequuntur et
+                    exercitationem voluptate quas dolorum? Suscipit, autem.
+                  </p>
+                </div>
+              </div>
+              <div
+                className={`product__review ${selectedTab !== 1 && "hidden"}`}
+                id="reviews"
+              >
+                <div className="product__review--content py-3">
+                  <div className="product__rating flex items-center justify-around">
+                    <div className="product__rate--score flex flex-col justify-center items-center">
+                      <h3 className="text-4xl text-[#f8b944] font-bold mb-2">
+                        4.5/5.0
+                      </h3>
+                      <div className="product__rate--star flex items-center mb-2">
+                        <FaStar className="text-[#f8b944] text-xl" />
+                        <FaStar className="text-[#f8b944] text-xl" />
+                        <FaStar className="text-[#f8b944] text-xl" />
+                        <FaStar className="text-[#f8b944] text-xl" />
+                        <FaStar className="text-[#f8b944] text-xl" />
+                      </div>
+                      <p className="text-base font-semibold text-gray-700">
+                        10 Reviews
+                      </p>
+                    </div>
+                    <div className="product__rate--list">
+                      <ul className="">
+                        <li className="">
+                          <span className="">5</span>{" "}
+                          <FaStar className="text-[#f8b944]" />
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="similar__products"></div>
         </div>
       </div>
     </>
