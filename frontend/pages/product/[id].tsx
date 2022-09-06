@@ -17,6 +17,10 @@ import { BsBagCheckFill } from "react-icons/bs";
 
 import { numberFormat } from "../../utils/numberFormatter";
 import Head from "next/head";
+import { reviews } from "../../assets/data/reviewsData";
+import ReviewComponent from "../../components/Product/Review";
+import StarRating from "../../components/Product/StarRating";
+import RatingProgressBar from "../../components/Product/RatingProgressBar";
 
 type Props = {};
 
@@ -116,6 +120,7 @@ const Product = (props: Props) => {
                       setMainImageHandler(image, true, "leave")
                     }
                     onClick={() => setMainImageHandler(image, false, "")}
+                    key={index}
                   >
                     <Image
                       src={image}
@@ -166,14 +171,8 @@ const Product = (props: Props) => {
               </div>
               <Link href="#reviews">
                 <div className="product__details--rating flex items-center mb-2 cursor-pointer">
-                  <div className="product__rating--stars flex items-center mr-2">
-                    <FaStar className="text-base secondary-color" />
-                    <FaStar className="text-base secondary-color" />
-                    <FaStar className="text-base secondary-color" />
-                    <FaStarHalfAlt className="text-base secondary-color" />
-                    <FaRegStar className="text-base secondary-color" />
-                  </div>
-                  <div className="product__rating--reviews text-sm md:text-base font-normal light-primary-color hover:underline">
+                  <StarRating rating={4.5} textSize="text-base" />
+                  <div className="product__rating--reviews text-sm md:text-base font-normal light-primary-color hover:underline ml-2">
                     <p>(23 ratings | 10 Reviews)</p>
                   </div>
                 </div>
@@ -360,32 +359,58 @@ const Product = (props: Props) => {
                 id="reviews"
               >
                 <div className="product__review--content py-3">
-                  <div className="product__rating flex items-center justify-around">
+                  <div className="product__rating flex items-center flex-col justify-around pb-2 md:flex-row">
                     <div className="product__rate--score flex flex-col justify-center items-center">
                       <h3 className="text-4xl text-[#f8b944] font-bold mb-2">
                         4.5/5.0
                       </h3>
-                      <div className="product__rate--star flex items-center mb-2">
-                        <FaStar className="text-[#f8b944] text-xl" />
-                        <FaStar className="text-[#f8b944] text-xl" />
-                        <FaStar className="text-[#f8b944] text-xl" />
-                        <FaStar className="text-[#f8b944] text-xl" />
-                        <FaStar className="text-[#f8b944] text-xl" />
-                      </div>
-                      <p className="text-base font-semibold text-gray-700">
+                      <StarRating rating={4.5} />
+                      <p className="text-base font-semibold text-gray-700 mt-2">
                         10 Reviews
                       </p>
                     </div>
-                    <div className="product__rate--list">
+                    <div className="product__rate--list mt-4 md:mt-0">
                       <ul className="">
-                        <li className="">
-                          <span className="">5</span>{" "}
-                          <FaStar className="text-[#f8b944]" />
-                        </li>
+                        <RatingProgressBar
+                          rating={5}
+                          percentage={70}
+                          totalRating={55}
+                        />
+                        <RatingProgressBar
+                          rating={4}
+                          percentage={25}
+                          totalRating={10}
+                        />
+                        <RatingProgressBar
+                          rating={3}
+                          percentage={0}
+                          totalRating={0}
+                        />
+                        <RatingProgressBar
+                          rating={2}
+                          percentage={5}
+                          totalRating={3}
+                        />
+                        <RatingProgressBar
+                          rating={1}
+                          percentage={0}
+                          totalRating={0}
+                        />
                       </ul>
                     </div>
                   </div>
+                  <hr />
+                  <div className="product__users--reviews">
+                    {reviews.map((review) => (
+                      <ReviewComponent review={review} />
+                    ))}
+                  </div>
                 </div>
+              </div>
+              <div
+                className={`product__specs ${selectedTab !== 2 && "hidden"}`}
+              >
+                <h3 className="">Specifications</h3>
               </div>
             </div>
           </div>
