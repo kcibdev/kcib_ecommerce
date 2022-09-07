@@ -19,9 +19,9 @@ class StarRating extends Component<Props> {
     const { rating, totalStars } = this.state;
     return [...Array(totalStars)].map((el, i) =>
       i < rating ? (
-        <FaStar className={this.state.iconClass} />
+        <FaStar className={this.state.iconClass} key={i} />
       ) : (
-        <FaRegStar className={this.state.iconClass} />
+        <FaRegStar className={this.state.iconClass} key={i} />
       )
     );
   };
@@ -32,13 +32,13 @@ class StarRating extends Component<Props> {
     return [...Array(totalStars)].map((el, i) =>
       // check if current star should be half
       i < rating && i + 1 > rating ? (
-        <FaStarHalfAlt className={this.state.iconClass} />
+        <FaStarHalfAlt className={this.state.iconClass} key={i} />
       ) : // check if current star should be full
       i < rating ? (
-        <FaStar className={this.state.iconClass} />
+        <FaStar className={this.state.iconClass} key={i} />
       ) : (
         // else, current star should be empty
-        <FaRegStar className={this.state.iconClass} />
+        <FaRegStar className={this.state.iconClass} key={i} />
       )
     );
   };

@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["images.unsplash.com", "ae01.alicdn.com", "ng.jumia.is"],
+    domains: ["images.unsplash.com", "ae01.alicdn.com", "ng.jumia.is", "localhost"],
   },
   // webpack(config) {
   //   config.infrastructureLogging = { debug: /PackFileCache/ };

@@ -22,3 +22,4 @@ export const NODE_IMAGE_URL: string =
 export const NEXT_IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL!;
 
 export const NEXT_PUBLIC_URL: string = process.env.NEXT_PUBLIC_URL!;
+export const NEXT_PRODUCT_URL: string = `${BASE_URL}/api/v1/product/`;

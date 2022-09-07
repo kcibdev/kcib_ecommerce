@@ -21,10 +21,20 @@ import { reviews } from "../../assets/data/reviewsData";
 import ReviewComponent from "../../components/Product/Review";
 import StarRating from "../../components/Product/StarRating";
 import RatingProgressBar from "../../components/Product/RatingProgressBar";
+import axios from "axios";
+import { NEXT_PRODUCT_URL } from "../../utils/constants";
+import { Product } from "../../types/productTypes";
 
-type Props = {};
+type Props = {
+  data: Product;
+};
 
 const Product = (props: Props) => {
+  const { data: product } = props;
+  const discountPrice = (
+    (Number(product.discount) * Number(product.price)) /
+    100
+  ).toFixed(0);
   const [quantity, setQuantity] = useState(1);
   const [isFavourite, setIsFavourite] = useState(false);
   const [mainImage, setMainImage] = useState("");
@@ -32,13 +42,6 @@ const Product = (props: Props) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedTab, setSelectedTab] = useState(0);
-  const images = [
-    "https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/34/619476/1.jpg?1826",
-    "https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-    "https://ae01.alicdn.com/kf/H47ae7ff5c98941c2ae35d879979fdf0bX/Hotwav-Cyber-9-Pro-4G-Rugged-Smartphone-Helio-P60-Octa-Core-6-3-8GB-128GB-7500mAh.jpg_Q90.jpg_.webp",
-  ];
-  const colors = ["red", "blue", "green", "yellow", "white"];
-  const sizes = ["S", "M", "L", "XL", "XXL"];
 
   const changeQuantity = (type: boolean) => {
     if (type) {
@@ -74,10 +77,12 @@ const Product = (props: Props) => {
     }
   };
 
+  const savedToWishlist = () => {};
+
   useEffect(() => {
-    setMainImage(images[0]);
-    setSelectedColor(colors[0]);
-    setSelectedSize(sizes[0]);
+    setMainImage(product.image[0] as string);
+    setSelectedColor(product.colors[0]);
+    setSelectedSize(product.sizes[0]);
   }, []);
   return (
     <>
@@ -101,7 +106,7 @@ const Product = (props: Props) => {
             <div className="product__images w-full md:w-[40%]">
               <div className="product__image--main max-w-[450px] w-full min-w-[200px] overflow-hidden rounded-md">
                 <Image
-                  src={mainImage}
+                  src={`${mainImage}`}
                   alt="product"
                   layout="responsive"
                   width="100%"
@@ -110,20 +115,22 @@ const Product = (props: Props) => {
                 />
               </div>
               <div className="product__image--others flex flex-wrap gap-3 mt-3">
-                {images.map((image, index) => (
+                {product.image.map((image, index) => (
                   <div
                     className="product__image--other w-[40px] md:w-[60px] h-[40px] md:h-[60px] overflow-hidden rounded-md cursor-pointer hover:border hover:border-gray-300"
                     onMouseEnter={() =>
-                      setMainImageHandler(image, true, "enter")
+                      setMainImageHandler(image as string, true, "enter")
                     }
                     onMouseLeave={() =>
-                      setMainImageHandler(image, true, "leave")
+                      setMainImageHandler(image as string, true, "leave")
                     }
-                    onClick={() => setMainImageHandler(image, false, "")}
+                    onClick={() =>
+                      setMainImageHandler(image as string, false, "")
+                    }
                     key={index}
                   >
                     <Image
-                      src={image}
+                      src={image as string}
                       alt="product"
                       layout="responsive"
                       width="100%"
@@ -137,8 +144,7 @@ const Product = (props: Props) => {
             <div className="product__details w-full md:w-[60%] px-0 md:px-5">
               <div className="product__details--top mb-2 md:mb-1 flex items-center justify-between">
                 <h1 className="product__details--title text-lg md:text-2xl font-semibold">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Blanditiis, cumque. Quibusdam, delectus officiis ex
+                  {product.title}
                 </h1>
                 <span className="product__details--save mx-2 cursor-pointer">
                   {isFavourite && (
@@ -159,43 +165,61 @@ const Product = (props: Props) => {
                   </Link>
                 </p>
               </div>
-              <div className="product__details--brand mb-2 md:mb-1">
-                <p className="text-base font-semibold">
-                  Brand:{" "}
-                  <Link href="">
-                    <span className="primary-color font-medium hover:underline cursor-pointer">
-                      Apple
-                    </span>
-                  </Link>
-                </p>
-              </div>
+              {product.brand && (
+                <div className="product__details--brand mb-2 md:mb-1">
+                  <p className="text-base font-semibold">
+                    Brand:{" "}
+                    <Link href="">
+                      <span className="primary-color font-medium hover:underline cursor-pointer">
+                        {product.brand}
+                      </span>
+                    </Link>
+                  </p>
+                </div>
+              )}
               <Link href="#reviews">
                 <div className="product__details--rating flex items-center mb-2 cursor-pointer">
                   <StarRating rating={4.5} textSize="text-base" />
                   <div className="product__rating--reviews text-sm md:text-base font-normal light-primary-color hover:underline ml-2">
-                    <p>(23 ratings | 10 Reviews)</p>
+                    <p>
+                      ({product.rating} ratings | {product.reviews.length}{" "}
+                      Reviews)
+                    </p>
                   </div>
                 </div>
               </Link>
               <hr />
               <div className="product__details--price pb-2 pt-2">
                 <p className="text-[1.5rem] font-semibold mb-1">
-                  {numberFormat(100000)}
+                  {`${
+                    Number(discountPrice) > 0
+                      ? numberFormat(
+                          Number(product.price) - Number(discountPrice)
+                        )
+                      : numberFormat(Number(product.price))
+                  }`}
                   <span className="text-xs font-normal ml-1">NGN</span>
                 </p>
-                <div className="product__price--discount text-gray-500 flex items-center">
-                  <p className="text-sm font-medium line-through mr-2">
-                    {numberFormat(10000)}
-                  </p>
-                  <p className="text-xs secondary-bg rounded px-1 font-medium text-white">{`-10%`}</p>
-                </div>
+                {Number(product.discount) > 0 && (
+                  <div className="product__price--discount text-gray-500 flex items-center">
+                    <p className="text-sm font-medium line-through mr-2">
+                      {numberFormat(Number(product.price))}
+                    </p>
+                    <p className="text-xs secondary-bg rounded px-1 font-medium text-white">{`-${product.discount}%`}</p>
+                  </div>
+                )}
               </div>
               <hr />
               <div className="product__details--misc">
                 <div className="product__misc--availability flex items-center my-4">
                   <p className="text-base font-medium">
                     Availability:{" "}
-                    <span className="ml-3 primary-color">In Stock</span>
+                    {product.available && (
+                      <span className="ml-3 primary-color">In Stock</span>
+                    )}
+                    {!product.available && (
+                      <span className="ml-3 text-red-500">Unavailable</span>
+                    )}
                   </p>
                 </div>
                 <div className="product__misc--quantity flex items-center mb-4 mt-2">
@@ -222,11 +246,11 @@ const Product = (props: Props) => {
                     </button>
                   </div>
                 </div>
-                {colors.length && (
+                {product.colors.length && (
                   <div className="product__misc--colors flex items-center mb-4">
                     <p className="text-base font-medium mr-3">Colors:</p>
                     <div className="product__color--list flex items-center flex-wrap">
-                      {colors.map((color, index) => (
+                      {product.colors.map((color, index) => (
                         <div
                           className={`product__color w-7 h-7 rounded-full border ${
                             selectedColor === color
@@ -243,11 +267,11 @@ const Product = (props: Props) => {
                     </div>
                   </div>
                 )}
-                {sizes.length && (
+                {product.sizes.length && (
                   <div className="product__misc--sizes flex items-center">
                     <p className="text-base font-medium mr-3">Size:</p>
                     <div className="product__size--list flex items-center flex-wrap">
-                      {sizes.map((size, index) => (
+                      {product.sizes.map((size, index) => (
                         <div
                           className={`product__size text-sm md:text-base font-semibold px-3 py-1 rounded border ${
                             selectedSize === size
@@ -402,7 +426,7 @@ const Product = (props: Props) => {
                   <hr />
                   <div className="product__users--reviews">
                     {reviews.map((review) => (
-                      <ReviewComponent review={review} />
+                      <ReviewComponent review={review} key={review.id} />
                     ))}
                   </div>
                 </div>
@@ -420,6 +444,22 @@ const Product = (props: Props) => {
       </div>
     </>
   );
+};
+
+export const getServerSideProps = async ({
+  params: { id },
+}: {
+  params: {
+    id: string;
+  };
+}) => {
+  const result = await axios.get(`${NEXT_PRODUCT_URL}/${id}`);
+
+  return {
+    props: {
+      data: result?.data?.data as Product,
+    },
+  };
 };
 
 export default Product;
