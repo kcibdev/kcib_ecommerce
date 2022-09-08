@@ -31,6 +31,7 @@ const AddProduct = (props: Props) => {
     sizes: string[];
     colors: string[];
     sellerId: string;
+    sellerName: string;
     url: string;
   }>({
     title: "",
@@ -45,6 +46,7 @@ const AddProduct = (props: Props) => {
     sizes: [],
     colors: [],
     sellerId: userAccount?.id,
+    sellerName: userAccount?.name,
     url: NODE_CREATE_PRODUCT_URL,
   });
   const router = useRouter();

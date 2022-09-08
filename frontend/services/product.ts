@@ -9,7 +9,7 @@ export const createProduct = async (
   product: Product,
   token: string
 ) => {
-  const image: string[] = await imageUpload(product.image);
+  const image: string[] = await imageUpload(product.image as File[]);
   const formData = {
     title: product.title,
     price: product.price,

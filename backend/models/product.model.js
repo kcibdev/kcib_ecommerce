@@ -40,6 +40,11 @@ const Product = new Schema(
       required: true,
       default: 0,
     },
+    totalRating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     reviews: [
       {
         type: Schema.Types.ObjectId,
@@ -65,6 +70,10 @@ const Product = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Merchant",
+    },
+    sellerName: {
+      type: String,
+      required: true,
     },
     views: {
       type: Number,

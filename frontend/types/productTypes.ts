@@ -1,3 +1,5 @@
+import { Review } from "./reviewTypes";
+
 export interface Product {
   _id: string;
   title: string;
@@ -12,9 +14,11 @@ export interface Product {
   sizes: string[];
   colors: string[];
   sellerId: string;
+  sellerName: string;
   url: string;
   rating: number;
-  reviews: string[];
+  reviews: Review[];
+  totalRating: number;
   totalOrders: number;
   available: boolean;
   views: number;

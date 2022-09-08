@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import { authorizationHeader } from "../../../utils/authorization";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +13,11 @@ export default async function handler(
     },
   };
   await axios
-    .post(req.body.url, req.body, config)
+    .post(
+      req.body.url,
+      req.body,
+      authorizationHeader(req.headers?.authorization!)
+    )
     .then((response) => {
       console.log("response.data", response.data);
       res.status(200).json(response.data);

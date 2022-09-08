@@ -34,6 +34,12 @@ const getProductController = asyncHandler(async (req, res, next) => {
       });
     }
 
+    const reviews = await Reviews.find({ productId });
+
+    if (reviews) {
+      product.reviews = reviews.userReviews;
+    }
+
     return res.status(200).json({
       success: true,
       data: product,
