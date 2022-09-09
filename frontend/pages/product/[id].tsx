@@ -22,13 +22,17 @@ import RatingProgressBar from "../../components/Product/RatingProgressBar";
 import { NEXT_PRODUCT_URL } from "../../utils/constants";
 import { Product } from "../../types/productTypes";
 import useAuthStore from "../../store/useAuthStore";
+import { deleteWishlist, saveWishlist } from "../../services/wishlist";
+import { User } from "../../types/userTypes";
 
 type Props = {
   data: Product;
 };
 
 const Product = (props: Props) => {
-  const { isAuthenticated, userAccount } = useAuthStore((state) => state);
+  const { isAuthenticated, userAccount, setUserAccount } = useAuthStore(
+    (state) => state
+  );
   const { data: product } = props;
   const discountPrice = (
     (Number(product.discount) * Number(product.price)) /
@@ -80,13 +84,22 @@ const Product = (props: Props) => {
     }
   };
 
-  const savedToWishlist = () => {
+  const savedToWishlist = async () => {
     if (!isAuthenticated) {
-      console.log("Not saved to wishlist");
       toast.error("Please login to add to wishlist");
       return;
     }
-    console.log("saved to wishlist");
+
+    let saveProduct: User | undefined;
+    if (isFavourite) {
+      saveProduct = await deleteWishlist(product, userAccount.token);
+    } else {
+      saveProduct = await saveWishlist(product, userAccount.token);
+    }
+    if (saveProduct) {
+      setUserAccount(saveProduct);
+      setIsFavourite(!isFavourite);
+    }
   };
 
   useEffect(() => {
@@ -94,7 +107,7 @@ const Product = (props: Props) => {
     setSelectedColor(product.colors[0]);
     setSelectedSize(product.sizes[0]);
     if (userAccount && isAuthenticated) {
-      userAccount?.wishlist?.forEach((item) => {
+      userAccount.wishlist.forEach((item) => {
         if (item.productId === product._id) {
           setIsFavourite(true);
         }
@@ -437,6 +450,11 @@ const Product = (props: Props) => {
                           totalRating={0}
                         />
                       </ul>
+                    </div>
+                    <div className="product__rate--btn my-3 md:my-0">
+                      <button className="rate rounded shadow-md px-4 py-3 secondary-bg text-white font-semibold outline-none border-none">
+                        Rate this product
+                      </button>
                     </div>
                   </div>
                   <hr />

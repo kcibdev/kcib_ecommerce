@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import { fetchFunc } from "../utils/fetchFunc";
 import { User } from "../types/userTypes";
 import { NEXT_PUBLIC_URL, NODE_FORGOT_URL } from "../utils/constants";
+import { Wishlist } from "../types/wishlistTypes";
+import { Cart } from "../types/cartTypes";
 
 export const loginUser = async (
   formData: {
@@ -57,8 +59,8 @@ export const accessLoginUser = async (
       email: userData.email,
       address: userData.address,
       phone: userData.phone,
-      cart: userData.cart,
-      wishlist: userData.wishlist,
+      cart: userData.cart as Cart[],
+      wishlist: userData.wishlist as Wishlist[],
       token: userData.token,
     };
     setAdminAccount(user);

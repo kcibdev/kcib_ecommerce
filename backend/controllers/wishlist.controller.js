@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 
 const Wishlist = require("../models/wishlist.model");
+const Customer = require("../models/customer.model");
+const { generateJWTToken } = require("../utils/jwtTokens");
 
 const getWishlistsController = asyncHandler(async (req, res) => {
   const { _id: userId } = req.user;
@@ -17,7 +19,7 @@ const getWishlistsController = asyncHandler(async (req, res) => {
   }
 });
 
-const addWishlistController = asyncHandler(async (req, res) => {
+const addWishlistController = asyncHandler(async (req, res, next) => {
   const { productId, price, image, title } = req.body;
   const { _id: userId } = req.user;
   try {
@@ -35,17 +37,14 @@ const addWishlistController = asyncHandler(async (req, res) => {
     });
 
     if (wishlist) {
+      console.log("wishlist exists");
       //check if product already exists in wishlist
       const item = wishlist.items.find(
         (product) => product.productId == productId
       );
 
-      if (item) {
-        res.status(200).json({
-          success: true,
-          message: "Item already exists in wishlist",
-        });
-      } else {
+      if (!item) {
+        console.log("item does not exist");
         //add product to wishlist
         wishlist.items.push({
           productId,
@@ -55,17 +54,51 @@ const addWishlistController = asyncHandler(async (req, res) => {
         });
         const wishlistSaved = await wishlist.save();
         if (wishlistSaved) {
-          res.status(200).json({
-            success: true,
-            message: "Item successfully added to Wishlist",
-            data: wishlist,
-          });
+          console.log("wishlist saved");
+          //add wishlist id to customer
+          const customer = await Customer.findById(userId);
+          if (customer) {
+            console.log("customer found");
+            customer.wishlist.push(wishlistSaved._id);
+            const customerSaved = await Customer.updateOne(
+              {
+                userId,
+              },
+              {
+                $set: {
+                  wishlist: customer.wishlist,
+                },
+              }
+            );
+            const customerData = {
+              id: customer._id,
+              name: customer.name,
+              email: customer.email,
+              phone: customer.phone,
+              address: customer.address,
+              cart: customer.cart,
+              orders: customer.orders,
+              token: generateJWTToken(customer._id),
+              wishlist: wishlist.items,
+            };
+            console.log("customerData", customerData);
+            if (customerSaved) {
+              console.log("customer saved");
+              res.status(200).json({
+                success: true,
+                message: "Item successfully added to Wishlist",
+                data: customerData,
+              });
+            }
+          }
         } else {
           res.status(400).json({
             success: false,
             message: "Failed to add item to wishlist",
           });
         }
+      } else {
+        console.log("item already exists");
       }
     } else {
       //create new wishlist
@@ -82,11 +115,38 @@ const addWishlistController = asyncHandler(async (req, res) => {
       });
       const wishlistSaved = await wishlist.save();
       if (wishlistSaved) {
-        res.status(200).json({
-          success: true,
-          message: "Item successfully added to Wishlist",
-          data: wishlist,
-        });
+        const customer = await Customer.findById(userId);
+        if (customer) {
+          customer.wishlist.push(wishlistSaved._id);
+          const customerSaved = await Customer.updateOne(
+            {
+              userId,
+            },
+            {
+              $set: {
+                wishlist: customer.wishlist,
+              },
+            }
+          );
+          const customerData = {
+            id: customer._id,
+            name: customer.name,
+            email: customer.email,
+            phone: customer.phone,
+            address: customer.address,
+            cart: customer.cart,
+            orders: customer.orders,
+            token: generateJWTToken(customer._id),
+            wishlist: wishlistSaved.items,
+          };
+          if (customerSaved) {
+            res.status(200).json({
+              success: true,
+              message: "Item successfully added to Wishlist",
+              data: customerData,
+            });
+          }
+        }
       } else {
         res.status(400).json({
           success: false,
@@ -95,7 +155,7 @@ const addWishlistController = asyncHandler(async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
 
@@ -118,11 +178,41 @@ const removeWishlistController = asyncHandler(async (req, res) => {
         wishlist.items.splice(index, 1);
         const wishlistSaved = await wishlist.save();
         if (wishlistSaved) {
-          res.status(200).json({
-            success: true,
-            message: "Item successfully deleted",
-            data: wishlist,
-          });
+          //remove wishlist id from customer
+          const customer = await Customer.findById(userId);
+          if (customer) {
+            const wishlistIndex = customer.wishlist.indexOf(wishlist._id);
+            customer.wishlist.splice(wishlistIndex, 1);
+            const customerSaved = await Customer.updateOne(
+              {
+                userId,
+              },
+              {
+                $set: {
+                  wishlist: customer.wishlist,
+                },
+              }
+            );
+            const customerData = {
+              id: customer._id,
+              name: customer.name,
+              email: customer.email,
+              phone: customer.phone,
+              address: customer.address,
+              cart: customer.cart,
+              orders: customer.orders,
+              token: generateJWTToken(customer._id),
+              wishlist: wishlistSaved.items,
+            };
+
+            if (customerSaved) {
+              res.status(200).json({
+                success: true,
+                message: "Item successfully removed from Wishlist",
+                data: customer,
+              });
+            }
+          }
         } else {
           res.status(400).json({
             success: false,

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NODE_PRODUCT_URL } from "../../../../utils/constants";
+import { NODE_WISHLIST_URL } from "../../../../utils/constants";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   const { id } = req.query;
   await axios
-    .get(`${NODE_PRODUCT_URL}/${id}`, req.body)
+    .get(`${NODE_WISHLIST_URL}/${id}`, req.body)
     .then((response) => {
       res.status(200).json(response.data);
     })

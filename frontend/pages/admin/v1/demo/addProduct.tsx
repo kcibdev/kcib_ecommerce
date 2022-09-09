@@ -8,7 +8,7 @@ import { categories, Category } from "../../../../assets/data/categories";
 import { toast } from "react-toastify";
 import { createProduct } from "../../../../services/product";
 import { Product } from "../../../../types/productTypes";
-import { NODE_CREATE_PRODUCT_URL } from "../../../../utils/constants";
+import { NODE_PRODUCT_URL } from "../../../../utils/constants";
 import useAuthStore from "../../../../store/useAuthStore";
 
 type Props = {};
@@ -47,7 +47,7 @@ const AddProduct = (props: Props) => {
     colors: [],
     sellerId: userAccount?.id,
     sellerName: userAccount?.name,
-    url: NODE_CREATE_PRODUCT_URL,
+    url: NODE_PRODUCT_URL,
   });
   const router = useRouter();
   const btnStyles =

@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler");
 const Customer = require("../models/customer.model");
 const PasswordReset = require("../models/passwordreset.model");
 const Cart = require("../models/cart.model");
+const Wishlist = require("../models/wishlist.model");
 
 const genRandom = require("../utils/generateRandom");
 const { generateJWTToken } = require("../utils/jwtTokens");
@@ -22,10 +23,20 @@ const loginController = asyncHandler(async (req, res) => {
     if (user) {
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
-        const cart = Cart.findOne({ customerId: user._id });
-        if (cart) {
-          user.cart = cart.items;
-        }
+        const cart = await Cart.findOne({ customerId: user._id });
+        const wishlist = await Wishlist.findOne({ customerId: user._id });
+
+        console.log({
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          address: user.address,
+          cart: cart.items || [],
+          orders: user.orders,
+          wishlist: wishlist.items || [],
+          token: generateJWTToken(user._id),
+        });
         res.status(200).json({
           message: "Login Successful",
           success: true,
@@ -35,9 +46,9 @@ const loginController = asyncHandler(async (req, res) => {
             email: user.email,
             phone: user.phone,
             address: user.address,
-            cart: user.cart,
+            cart: cart.items || [],
             orders: user.orders,
-            wishlist: user.wishlist,
+            wishlist: wishlist.items || [],
             token: generateJWTToken(user._id),
           },
         });

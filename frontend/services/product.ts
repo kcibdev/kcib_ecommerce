@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { Product } from "../types/productTypes";
-import { NEXT_PUBLIC_URL, NODE_CREATE_PRODUCT_URL } from "../utils/constants";
+import { NEXT_PUBLIC_URL, NODE_PRODUCT_URL } from "../utils/constants";
 import { fetchFunc } from "../utils/fetchFunc";
 import { imageUpload } from "./imageUpload";
 
@@ -23,7 +23,7 @@ export const createProduct = async (
     subCategory: product.subCategory,
     sizes: product.sizes,
     colors: product.colors,
-    url: NODE_CREATE_PRODUCT_URL,
+    url: NODE_PRODUCT_URL,
   };
   const result = await fetchFunc(NEXT_PUBLIC_URL, formData, "POST", token);
   if (!result.success) {
