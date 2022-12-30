@@ -87,7 +87,33 @@ const deleteCustomerController = asyncHandler(async (req, res, next) => {
     console.log(error);
   }
 });
-const searchCustomersController = asyncHandler(async (req, res, next) => {});
+const searchCustomersController = asyncHandler(async (req, res, next) => {
+  const { keyword } = req.params;
+  try {
+    const customers = await Customer.find({
+      $or: [
+        { name: { $regex: keyword, $options: "i" } },
+        { email: { $regex: keyword, $options: "i" } },
+      ],
+    }).select("-password");
+
+    if (!customers) {
+      return res.status(400).json({
+        success: false,
+        message: "No customers found",
+        data: [],
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Successfully retrieved customers",
+      data: customers,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 const createAddressController = asyncHandler(async (req, res, next) => {});
 const getAddressController = asyncHandler(async (req, res, next) => {});
 const updateAddressController = asyncHandler(async (req, res, next) => {});
